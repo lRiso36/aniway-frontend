@@ -4,7 +4,6 @@ import { AuthLayout } from '../components/layout/AuthLayout';
 import { AuthContainer } from '../components/common/AuthContainer';
 import { FormInput } from '../components/ui/FormInput';
 import { AuthButtons } from '../components/ui/AuthButtons';
-import type { Asterisk } from 'lucide-react';
 
 export const Login = () => {
   const [formData, setFormData] = useState({
