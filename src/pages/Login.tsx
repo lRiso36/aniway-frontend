@@ -4,6 +4,7 @@ import { AuthLayout } from '../components/layout/AuthLayout';
 import { AuthContainer } from '../components/common/AuthContainer';
 import { FormInput } from '../components/ui/FormInput';
 import { AuthButtons } from '../components/ui/AuthButtons';
+import { GoogleLoginButton } from '../components/social-logins';
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -74,6 +75,13 @@ export const Login = () => {
             onClick={handleSubmit}
             clickEnabled={approved}
             label="Login"
+          />
+        </div>
+        <div className="mt-4">
+          <GoogleLoginButton
+            onSuccess={(response) => {
+              console.log('Google login successful:', response);
+            }}
           />
         </div>
       </AuthContainer>

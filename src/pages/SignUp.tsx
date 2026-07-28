@@ -32,7 +32,7 @@ const stepContent: Record<number, { title: string; subtitle: string }> = {
 
 export const SignUp = () => {
   // const navigate = useNavigate();
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<SignUpFormData>(initialFormData);
   const [agreed, setAgreed] = useState(false);
 
