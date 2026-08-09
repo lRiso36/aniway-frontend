@@ -3,8 +3,4 @@ export type SignUpFormData = {
   email: string;
   password: string;
   confirmPassword: string;
-  avatar: string;
-  displayName: string;
-  bio: string;
-  favoriteGenres: string[];
 };

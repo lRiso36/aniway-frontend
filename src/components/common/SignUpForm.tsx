@@ -1,24 +1,28 @@
-import React from 'react';
-import { FormInput } from '../../ui/FormInput';
-import type { SignUpFormData } from '../../../types/SignUpFormData';
-import { useSignUpValidation } from '../../../hooks/useSignUpValidation';
-import { AuthButtons } from '../../ui/AuthButtons';
+import React, { useState } from 'react';
+import { FormInput } from '../ui/FormInput';
+import type { SignUpFormData } from '../../types/SignUpFormData';
+import { useSignUpValidation } from '../../hooks/useSignUpValidation';
+import { AuthButtons } from '../ui/AuthButtons';
+import { registerUser } from '../../api/auth';
+import { toastError } from '../../lib/toast';
+import axios from 'axios';
 
 type SignUpStepOneTypes = {
   formData: SignUpFormData;
   setFormData: React.Dispatch<React.SetStateAction<SignUpFormData>>;
   agreed: boolean;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
-  nextStep: () => void;
+  onSuccess: () => void;
 };
 
-export const SignUpStepOne = ({
+export const SignUpForm = ({
   formData,
   setFormData,
   agreed,
   setAgreed,
-  nextStep,
+  onSuccess,
 }: SignUpStepOneTypes) => {
+  const [loading, setLoading] = useState(false);
   const {
     usernameError,
     emailError,
@@ -46,20 +50,30 @@ export const SignUpStepOne = ({
       : '';
 
   async function handleSubmit() {
-    if (approved) nextStep();
+    if (!approved) return;
+
+    setLoading(true);
+    try {
+      await registerUser({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+      onSuccess();
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        toastError(err.response.data.message);
+      } else {
+        toastError('Something went wrong. Please try again.');
+      }
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <div className="flex flex-col gap-3">
-      {/* <GoogleSignInButton
-                label="Sign up with Google"
-                onClick={() => console.log("google clicked")}
-            />
-            <div className="flex justify-center my-4">
-                
-                <span className="text-zinc-400 text-sm">or</span>
-                
-            </div> */}
       <FormInput
         label="Username"
         error={usernameError}
@@ -90,13 +104,7 @@ export const SignUpStepOne = ({
           setFormData((prev) => ({ ...prev, password: c }))
         }
       />
-      <div
-        className="
-                    mt-1
-                    space-y-1
-                    text-xs
-                    "
-      >
+      <div className="mt-1 space-y-1 text-xs">
         <p className={passwordLengthValid ? 'text-green-400' : 'text-zinc-500'}>
           • At least 8 characters
         </p>
@@ -123,7 +131,6 @@ export const SignUpStepOne = ({
         }
       />
 
-      {/* checkbox */}
       <div className="flex items-center gap-2 mt-4">
         <input
           type="checkbox"
@@ -134,7 +141,6 @@ export const SignUpStepOne = ({
         />
         <label
           htmlFor="agree"
-          // onClick={()=> setTosOpen(true)}
           className="text-xs sm:text-sm text-zinc-500 leading-relaxed"
         >
           I agree to the
@@ -144,7 +150,11 @@ export const SignUpStepOne = ({
         </label>
       </div>
 
-      <AuthButtons onClick={() => handleSubmit()} clickEnabled={approved} />
+      <AuthButtons
+        onClick={() => handleSubmit()}
+        clickEnabled={approved && !loading}
+        label={loading ? 'Signing Up...' : 'Sign Up'}
+      />
     </div>
   );
 };

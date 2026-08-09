@@ -4,23 +4,38 @@ import { AuthLayout } from '../components/layout/AuthLayout';
 import { AuthContainer } from '../components/common/AuthContainer';
 import { FormInput } from '../components/ui/FormInput';
 import { AuthButtons } from '../components/ui/AuthButtons';
+import { login } from '../api/auth';
+import axios from 'axios';
+import { useAuthStore } from '../stores/useAuthStore';
 
 export const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const setAuth = useAuthStore((state) => state.setAuth);
+
   const approved = !!(formData.email && formData.password);
 
   async function handleSubmit() {
+    setError('');
+    setLoading(true);
     try {
-      console.log(formData);
+      const { user, accessToken } = await login({
+        email: formData.email,
+        password: formData.password,
+      });
+      setAuth(user, accessToken);
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : 'Unable to log in. Try again.'
-      );
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -72,7 +87,7 @@ export const Login = () => {
           </div>
           <AuthButtons
             onClick={handleSubmit}
-            clickEnabled={approved}
+            clickEnabled={approved && !loading}
             label="Login"
           />
         </div>
