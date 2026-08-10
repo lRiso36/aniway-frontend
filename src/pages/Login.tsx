@@ -20,21 +20,26 @@ export const Login = () => {
   const approved = !!(formData.email && formData.password);
 
   async function handleSubmit() {
+    console.log('clicked');
     setError('');
     setLoading(true);
     try {
+      console.log('calling login');
       const { user, accessToken } = await login({
         email: formData.email,
         password: formData.password,
       });
+      console.log('login succeeded', user, accessToken);
       setAuth(user, accessToken);
     } catch (err) {
+      console.log('login failed', err);
       if (axios.isAxiosError(err) && err.response?.data?.message) {
         setError(err.response.data.message);
       } else {
         setError('Something went wrong. Please try again.');
       }
     } finally {
+      console.log('finally ran');
       setLoading(false);
     }
   }

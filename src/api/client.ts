@@ -18,13 +18,19 @@ client.interceptors.request.use((config) => {
 });
 
 let refreshPromise: Promise<string> | null = null;
+const excludedFromRefresh = ['/auth/login', '/auth/register', '/auth/refresh'];
 
 client.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes('/auth/login') &&
+      !excludedFromRefresh.some((path) => originalRequest.url?.includes(path))
+    ) {
       originalRequest._retry = true;
 
       //refresh logic
