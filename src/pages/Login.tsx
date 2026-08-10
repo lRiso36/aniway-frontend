@@ -91,6 +91,13 @@ export const Login = () => {
             label="Login"
           />
         </div>
+        <div className="mt-4">
+          {/* <GoogleLoginButton
+            onSuccess={(response) => {
+              console.log('Google login successful:', response);
+            }}
+          /> */}
+        </div>
       </AuthContainer>
     </AuthLayout>
   );
