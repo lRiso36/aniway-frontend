@@ -28,7 +28,6 @@ client.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes('/auth/login') &&
       !excludedFromRefresh.some((path) => originalRequest.url?.includes(path))
     ) {
       originalRequest._retry = true;
