@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { AuthNav } from '../components/common/AuthNav';
-import { AuthLayout } from '../components/layout/AuthLayout';
-import { AuthContainer } from '../components/common/AuthContainer';
-import { FormInput } from '../components/ui/FormInput';
-import { AuthButtons } from '../components/ui/AuthButtons';
-import { login } from '../api/auth';
+import { AuthNav } from '../../components/common/AuthNav';
+import { AuthLayout } from '../../components/layout/AuthLayout';
+import { AuthContainer } from '../../components/common/AuthContainer';
+import { FormInput } from '../../components/ui/FormInput';
+import { AuthButtons } from '../../components/ui/AuthButtons';
+import { login } from '../../api/auth';
 import axios from 'axios';
-import { useAuthStore } from '../stores/useAuthStore';
+import { useAuthStore } from '../../stores/useAuthStore';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLoginButton } from '../../components/social-logins';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -83,23 +84,30 @@ export const Login = () => {
             )}
             <p
               className="text-xs text-purple-400 hover:text-purple-300 cursor-pointer mt-1 text-right"
-              // onClick={() => navigate("/forgot-password")}
+              onClick={() => navigate('/forgot-password')}
             >
               Forgot password?
             </p>
           </div>
+
+          {/* ASK ABOUT WIDTH ON GOOGLE BUTTONS */}
+        </div>
+        <div className="w-full mt-3">
           <AuthButtons
             onClick={handleSubmit}
             clickEnabled={approved && !loading}
             label={loading ? 'Logging In...' : 'Log In'}
           />
-        </div>
-        <div className="mt-4">
-          {/* <GoogleLoginButton
-            onSuccess={(response) => {
-              console.log('Google login successful:', response);
-            }}
-          /> */}
+
+          <p className="text-center text-xs text-gray-400 my-1">or</p>
+
+          <div className="mt-3">
+            <GoogleLoginButton
+              onSuccess={(response) => {
+                console.log('Google login successful:', response);
+              }}
+            />
+          </div>
         </div>
       </AuthContainer>
     </AuthLayout>

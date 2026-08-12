@@ -21,3 +21,11 @@ export async function login(data: LoginData) {
   const { accessToken, user } = response.data;
   return { accessToken, user };
 }
+
+export async function forgotPassword(email: string) {
+  await client.post('/auth/forgot-password', { email });
+}
+
+export async function resetPassword(token: string, newPassword: string) {
+  await client.post('/auth/reset-password', { token, newPassword });
+}

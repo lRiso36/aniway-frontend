@@ -29,8 +29,6 @@ export const SignUpForm = ({
     passwordsMatch,
     passwordsFilled,
     passwordLengthValid,
-    passwordHasNumber,
-    passwordHasSpecialChar,
     emailValid,
     approved,
   } = useSignUpValidation(
@@ -107,16 +105,6 @@ export const SignUpForm = ({
       <div className="mt-1 space-y-1 text-xs">
         <p className={passwordLengthValid ? 'text-green-400' : 'text-zinc-500'}>
           • At least 8 characters
-        </p>
-        <p className={passwordHasNumber ? 'text-green-400' : 'text-zinc-500'}>
-          • Contains a number
-        </p>
-        <p
-          className={
-            passwordHasSpecialChar ? 'text-green-400' : 'text-zinc-500'
-          }
-        >
-          • Contains a special character
         </p>
       </div>
       <FormInput

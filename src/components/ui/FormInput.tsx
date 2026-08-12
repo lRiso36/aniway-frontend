@@ -10,6 +10,7 @@ type FormInputProps = {
   limit?: number;
   value: string;
   onChange: (value: string) => void;
+  onEnter?: () => void;
 };
 
 export const FormInput = ({
@@ -21,6 +22,7 @@ export const FormInput = ({
   value,
   limit,
   onChange,
+  onEnter,
 }: FormInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === 'password';
@@ -47,6 +49,11 @@ export const FormInput = ({
           value={value}
           maxLength={limit}
           onChange={(e) => onChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key == 'Enter') {
+              onEnter?.();
+            }
+          }}
         />
         {isPassword && (
           <button

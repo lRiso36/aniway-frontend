@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { AuthContainer } from '../components/common/AuthContainer';
-import type { SignUpFormData } from '../types/SignUpFormData';
-import { SignUpForm } from '../components/common/SignUpForm';
-import { AuthLayout } from '../components/layout/AuthLayout';
-import { AuthNav } from '../components/common/AuthNav';
+import { AuthContainer } from '../../components/common/AuthContainer';
+import type { SignUpFormData } from '../../types/SignUpFormData';
+import { SignUpForm } from '../../components/common/SignUpForm';
+import { AuthLayout } from '../../components/layout/AuthLayout';
+import { AuthNav } from '../../components/common/AuthNav';
+import { MailOpen } from 'lucide-react';
 
 const initialFormData: SignUpFormData = {
   username: '',
@@ -43,8 +44,10 @@ export const SignUp = () => {
         )}
         {submitted && (
           <div className="flex flex-col items-center justify-center space-y-3 py-10">
-            <p className="text-3xl">📧</p>
-            <h2 className="text-white text-xl font-semibold">Almost there!</h2>
+            <div className="flex gap-3 items-center">
+              <MailOpen className="w-7 h-7 text-white-500" />
+              <p className="text-white font-semibold text-lg">Almost there!</p>
+            </div>
             <p className="text-zinc-400 text-sm text-center max-w-sm mx-auto">
               Click the link in your email to verify your account, then log in.
             </p>

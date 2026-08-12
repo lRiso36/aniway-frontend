@@ -14,10 +14,6 @@ export const useSignUpValidation = (
   const passwordsMatch = password === confirmPassword;
   const passwordsFilled = password.length > 0 && confirmPassword.length > 0;
   const passwordLengthValid = password.length >= 8;
-  const passwordHasNumber = /\d/.test(password);
-  const passwordHasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-  const validPassword =
-    passwordLengthValid && passwordHasSpecialChar && passwordHasNumber;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const usernameValid =
     username.length >= 3 &&
@@ -39,7 +35,7 @@ export const useSignUpValidation = (
 
   const approved =
     passwordsMatch &&
-    validPassword &&
+    passwordLengthValid &&
     emailValid &&
     agreed &&
     !usernameError &&
@@ -90,8 +86,6 @@ export const useSignUpValidation = (
     passwordsMatch,
     passwordsFilled,
     passwordLengthValid,
-    passwordHasNumber,
-    passwordHasSpecialChar,
     emailValid,
     approved,
   };

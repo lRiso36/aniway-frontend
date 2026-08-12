@@ -18,12 +18,14 @@ export default function GoogleLoginButton({
 
   return (
     <>
-      <GoogleLogin
-        onSuccess={onSuccess}
-        onError={onError}
-        useOneTap
-        {...rest}
-      />
+      <div className="flex justify-center w-full">
+        <GoogleLogin
+          onSuccess={onSuccess}
+          onError={onError}
+          useOneTap
+          {...rest}
+        />
+      </div>
     </>
   );
 }
