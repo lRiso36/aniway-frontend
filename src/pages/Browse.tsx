@@ -94,7 +94,7 @@ export const Browse = () => {
                 flex items-center gap-3
                 bg-[#1e1e2e]
                 border border-white/10
-                rounded-xl 
+                rounded-md
                 px-4 py-2 sm:py-2.5
                 "
         >
