@@ -6,6 +6,7 @@ import { useState } from 'react';
 // import { useBrowseData } from "../hooks/browse/useBrowseData";
 // import { useGenreFilter } from "../hooks/browse/useGenreFilter";
 import { useAnimeSearch } from '../hooks/useAnimeSearch';
+import { AnimeCard } from '../components/common/AnimeCard';
 
 // const genres = [
 //     "All",
@@ -148,18 +149,21 @@ export const Browse = () => {
               <p> Loading </p>
             </div>
           ) : searchResults?.length > 0 ? (
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 sm:gap-6 gap-4">
               {searchResults.map((anime) => (
-                <p className="text-white">
-                  {anime.titleEnglish ?? anime.titleRomaji}
-                </p>
-                // <div key={anime.anilistId} className="w-full">
-                //     <AnimeCard
-                //         anime={anime}
-                //         entry={entries.find(e => e.anilistId === anime.anilistId)}
-                //         onEntryChange={updateEntry}
-                //     />
-                // </div>
+                // <p className="text-white">
+                //   {anime.titleEnglish ?? anime.titleRomaji}
+                // </p>
+                <div
+                  key={anime.anilistId}
+                  className="w-full max-w-[160px] mx-auto"
+                >
+                  <AnimeCard
+                    anime={anime}
+                    // entry={entries.find(e => e.anilistId === anime.anilistId)}
+                    // onEntryChange={updateEntry}
+                  />
+                </div>
               ))}
             </div>
           ) : (
