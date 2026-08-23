@@ -12,8 +12,9 @@ export const useAnimeSearch = (query: string) => {
       return;
     }
 
+    setSearchLoading(true);
+    
     const timer = setTimeout(async () => {
-      setSearchLoading(true);
       try {
         const results = await getAnimeBySearch(query);
         setAnimeSearchResults(results);

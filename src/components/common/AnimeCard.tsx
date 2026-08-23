@@ -1,7 +1,6 @@
 import type { AnimeType } from '../../types/AnimeType';
 // import type { UserAnimeEntry, UserAnimeStatus } from "../types/UserAnimeEntry";
 // import { AnimeCardMenu } from "./AnimeCardMenu";
-// import { LogModal } from "./LogModal";
 // import { RemoveModal } from "./RemoveModal";
 import { useNavigate } from 'react-router-dom';
 // import { RateReviewModal } from "./RateReviewModal";
@@ -11,10 +10,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAnimeCard } from '../../hooks/useAnimeCard';
 import { AnimeCardMenu } from './AnimeCardMenu';
 import { Heart, Tv, Star, ListPlus } from 'lucide-react';
+import { LogModal } from './LogModal';
+import type { UserAnimeEntry } from '../../types/UserAnimeEntryType';
 
 type AnimeCardType = {
   anime: AnimeType;
-  //   entry?: UserAnimeEntry;
+  entry?: UserAnimeEntry;
   readOnly?: boolean;
   //   onEntryChange?: (updated: UserAnimeEntry | null, anilistId: number) => void;
   //   onStatusChange?: (anilistId: number, status: UserAnimeStatus) => void;
@@ -25,7 +26,7 @@ type AnimeCardType = {
   onRemove?: (anilistId: number) => void;
 };
 
-export const AnimeCard = ({ anime, readOnly = false }: AnimeCardType) => {
+export const AnimeCard = ({ anime, entry, readOnly = false }: AnimeCardType) => {
   const isFavorite = true;
   const MENU_ITEMS = [
     {
@@ -77,7 +78,7 @@ export const AnimeCard = ({ anime, readOnly = false }: AnimeCardType) => {
     menuOpen,
     setMenuOpen,
     openLeft,
-    // activeModal,
+    activeModal,
     setActiveModal,
     menuRef,
     handleMenuOpen,
@@ -146,53 +147,26 @@ export const AnimeCard = ({ anime, readOnly = false }: AnimeCardType) => {
                         : `${anime.episodes ?? "—"} eps`}
                 </p> */}
       </div>
+
+       {!readOnly && (
+            <>
+              <LogModal
+                isOpen={activeModal === 'log'}
+                onClose={() => setActiveModal(null)}
+                anime={anime}
+                currentEntry={entry}
+                onSave={(updated) => {
+                  setActiveModal(null);
+                  // onEntryChange?.(updated, anime.anilistId)
+                }}
+              />
+              
+              </>
+  )}
+
     </div>
 
-    //     <div ref={menuRef} className="flex flex-col gap-2 relative">
-    //       <div className="relative group aspect-[3/4] rounded-lg overflow-hidden"
-    //         onClick={() => navigate(`/anime/${anime.anilistId}`)}
-    //       >
-    //         <img
-    //           src={anime.coverImage.large}
-    //           alt={anime.title.english ?? anime.title.romaji}
-    //           className="w-full h-full object-cover"
-    //         />
-    // {!readOnly && (
-    //   <div className="absolute top-1 right-1 z-20">
-    //     <button
-    //       onClick={handleMenuOpen}
-    //       className="w-6 h-7 lg:w-8 lg:h-9 flex items-center justify-center text-white bg-black/50 hover:bg-black/80 transition-colors rounded-md"
-    //     >
-    //       <svg width="16" height="16" viewBox="0 0 26 26" fill="currentColor"
-    //         className="lg:w-5 lg:h-5 transition-transform group-hover:scale-125"
-    //       >
-    //         <circle cx="12" cy="4" r="2.5" />
-    //         <circle cx="12" cy="13" r="2.5" />
-    //         <circle cx="12" cy="22" r="2.5" />
-    //       </svg>
-    //     </button>
-    //   </div>
-    // )}
-    //         <div className="absolute inset-0 border-2 border-purple-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-10" />
-    //       </div>
-
-    //       {!readOnly && (
-    //         <AnimeCardMenu
-    //           menuOpen={menuOpen}
-    //           openLeft={openLeft}
-    //           items={MENU_ITEMS}
-    //           canRemove={canRemove}
-    //           onClose={() => setMenuOpen(false)}
-    //           onSelect={(id) => {
-    //             if (id === 'log') setActiveModal('log');
-    //             if (id === 'favorite') toggleFavorite();
-    //             if (id === 'remove') setActiveModal('remove');
-    //             if (id === 'rate-review') setActiveModal('rate-review');
-    //             if (id === 'list') setActiveModal('list');
-    //           }}
-    //         />
-    //       )}
-
+  
     //       <div>
     //         <p className="-mt-1 ml-1 text-white text-xs lg:text-base font-medium line-clamp-1">
     //           {anime.title.english ?? anime.title.romaji}
@@ -213,18 +187,21 @@ export const AnimeCard = ({ anime, readOnly = false }: AnimeCardType) => {
     //         </div>
     //       )}
 
-    //       {!readOnly && (
-    //         <>
-    //           <LogModal
-    //             isOpen={activeModal === 'log'}
-    //             onClose={() => setActiveModal(null)}
-    //             anime={anime}
-    //             currentEntry={entry}
-    //             onSave={(updated) => {
-    //               setActiveModal(null);
-    //               onEntryChange?.(updated, anime.anilistId)
-    //             }}
-    //           />
+  //         {!readOnly && (
+  //           <>
+  //             <LogModal
+  //               isOpen={activeModal === 'log'}
+  //               onClose={() => setActiveModal(null)}
+  //               anime={anime}
+  //               currentEntry={entry}
+  //               onSave={(updated) => {
+  //                 setActiveModal(null);
+  //                 onEntryChange?.(updated, anime.anilistId)
+  //               }}
+  //             />
+              
+  //             </>
+  // )}
     //           <RemoveModal
     //             isOpen={activeModal === 'remove'}
     //             onClose={() => setActiveModal(null)}
