@@ -8,6 +8,16 @@ import { useState } from 'react';
 import { useAnimeSearch } from '../hooks/useAnimeSearch';
 import { AnimeCard } from '../components/common/AnimeCard';
 import { AnimeCardSkeleton } from '../components/ui/AnimeCardSkeleton';
+import { FilterBar } from '../components/common/FilterBar';
+import {
+  genreOptions,
+  seasonOptions,
+  formatOptions,
+  airingStatusOptions,
+  yearOptions,
+} from '../data/filterOptions';
+import { FilterButton } from '../components/ui/FilterButton';
+import { ActiveFilters } from '../components/common/ActiveFilters';
 
 // const genres = [
 //     "All",
@@ -34,6 +44,26 @@ export const Browse = () => {
 
   // const { activeGenre, setActiveGenre, genreResults, genreLoading } = useGenreFilter();
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [filterValues, setFilterValues] = useState<Record<string, string>>({
+    genre: '',
+    year: '',
+    season: '',
+    format: '',
+    airingStatus: '',
+  });
+
+  const filterConfig = [
+    { key: 'genre', label: 'Genres & Tags', options: genreOptions },
+    { key: 'year', label: 'Year', options: yearOptions },
+    { key: 'season', label: 'Season', options: seasonOptions },
+    { key: 'format', label: 'Format', options: formatOptions },
+    {
+      key: 'airingStatus',
+      label: 'Airing Status',
+      options: airingStatusOptions,
+    },
+  ];
 
   const { animeSearchResults: searchResults, searchLoading } =
     useAnimeSearch(searchQuery);
@@ -91,39 +121,40 @@ export const Browse = () => {
       >
         {/* <h2 className="ml-1 sm:mb-3 text-zinc-100 text-xl sm:text-4xl font-bold">Browse Anime</h2> */}
         {/* search div */}
-        <div
-          className="
-                flex items-center gap-3
+        <div className="flex gap-5">
+          <div
+            className="
+                flex-1 flex items-center gap-3
                 bg-[#1e1e2e]
                 border border-white/10
                 rounded-md
                 px-4 py-2 sm:py-2.5
                 "
-        >
-          {/* search icon */}
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="
+          >
+            {/* search icon */}
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="
                     text-white/30 shrink-0 
                     w-4 h-4 sm:w-5 sm:h-5
                     "
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-            }}
-            placeholder="Search anime..."
-            className="
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+              }}
+              placeholder="Search anime..."
+              className="
                         bg-transparent
                         text-white
                         placeholder-white/30
@@ -132,16 +163,53 @@ export const Browse = () => {
                         w-full
                         outline-none
                         "
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="text-white/30 hover:text-white/60 transition-colors shrink-0"
-            >
-              ✕
-            </button>
-          )}
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-white/30 hover:text-white/60 transition-colors shrink-0"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          <div>
+            <FilterButton
+              open={filterOpen}
+              onClick={() => setFilterOpen(!filterOpen)}
+            />
+          </div>
         </div>
+        {filterOpen && (
+          <FilterBar
+            filters={filterConfig}
+            values={filterValues}
+            onFilterChange={(key, val) =>
+              setFilterValues((prev) => ({ ...prev, [key]: val }))
+            }
+          />
+        )}
+
+        <ActiveFilters
+          filters={filterConfig}
+          values={filterValues}
+          onFilterChange={(key, val) =>
+            setFilterValues((prev) => ({ ...prev, [key]: val }))
+          }
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          onClearAll={() => {
+            setSearchQuery('');
+            setFilterValues({
+              genre: '',
+              year: '',
+              season: '',
+              format: '',
+              airingStatus: '',
+            });
+          }}
+        />
+
         {searchQuery.trim() &&
           //search mode
           (searchLoading ? (
@@ -161,8 +229,8 @@ export const Browse = () => {
                 >
                   <AnimeCard
                     anime={anime}
-                  // entry={entries.find(e => e.anilistId === anime.anilistId)}
-                  // onEntryChange={updateEntry}
+                    // entry={entries.find(e => e.anilistId === anime.anilistId)}
+                    // onEntryChange={updateEntry}
                   />
                 </div>
               ))}

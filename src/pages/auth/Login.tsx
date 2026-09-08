@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AuthNav } from '../../components/common/AuthNav';
 import { AuthLayout } from '../../components/layout/AuthLayout';
 import { AuthContainer } from '../../components/common/AuthContainer';
@@ -7,11 +7,14 @@ import { AuthButtons } from '../../components/ui/AuthButtons';
 import { login } from '../../api/auth';
 import axios from 'axios';
 import { useAuthStore } from '../../stores/useAuthStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { GoogleLoginButton } from '../../components/social-logins';
+import { toastSuccess } from '../../lib/toast';
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -42,6 +45,14 @@ export const Login = () => {
       setLoading(false);
     }
   }
+
+  const verified = searchParams.get('verified');
+
+  useEffect(() => {
+    if (verified === 'true') {
+      toastSuccess('Your email has been verified. You can now log in.');
+    }
+  }, []);
 
   return (
     <AuthLayout>
