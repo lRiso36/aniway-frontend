@@ -18,6 +18,7 @@ import {
 } from '../data/filterOptions';
 import { FilterButton } from '../components/ui/FilterButton';
 import { ActiveFilters } from '../components/common/ActiveFilters';
+import { SortDropdown } from '../components/common/SortDropdown';
 
 // const genres = [
 //     "All",
@@ -64,6 +65,7 @@ export const Browse = () => {
       options: airingStatusOptions,
     },
   ];
+  const [sortBy, setSortBy] = useState('TITLE');
 
   const { animeSearchResults: searchResults, searchLoading } =
     useAnimeSearch(searchQuery);
@@ -189,27 +191,32 @@ export const Browse = () => {
             }
           />
         )}
-
-        <ActiveFilters
-          filters={filterConfig}
-          values={filterValues}
-          onFilterChange={(key, val) =>
-            setFilterValues((prev) => ({ ...prev, [key]: val }))
-          }
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          onClearAll={() => {
-            setSearchQuery('');
-            setFilterValues({
-              genre: '',
-              year: '',
-              season: '',
-              format: '',
-              airingStatus: '',
-            });
-          }}
-        />
-
+        <div className="flex items-center justify-between gap-2">
+          <ActiveFilters
+            filters={filterConfig}
+            values={filterValues}
+            onFilterChange={(key, val) =>
+              setFilterValues((prev) => ({ ...prev, [key]: val }))
+            }
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onClearAll={() => {
+              setSearchQuery('');
+              setFilterValues({
+                genre: '',
+                year: '',
+                season: '',
+                format: '',
+                airingStatus: '',
+              });
+            }}
+          />
+          {searchQuery.trim() && (
+            <div className="hidden sm:block">
+              <SortDropdown value={sortBy} onChange={setSortBy} />
+            </div>
+          )}
+        </div>
         {searchQuery.trim() &&
           //search mode
           (searchLoading ? (
