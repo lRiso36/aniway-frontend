@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { FilterDropdown } from '../ui/FilterDropdown';
 
 interface FilterConfig {
@@ -10,11 +11,18 @@ interface FilterBarProps {
   filters: FilterConfig[];
   values: Record<string, string>;
   onFilterChange: (key: string, value: string) => void;
+  children: ReactNode;
 }
 
-export function FilterBar({ filters, values, onFilterChange }: FilterBarProps) {
+export function FilterBar({
+  filters,
+  values,
+  onFilterChange,
+  children,
+}: FilterBarProps) {
   return (
     <div className="no-scrollbar flex gap-4 mt-1 overflow-x-auto pb-1 w-full">
+      {children}
       {filters.map((filter) => (
         <FilterDropdown
           key={filter.key}

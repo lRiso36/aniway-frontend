@@ -1,8 +1,14 @@
 import { GENRES } from './genres';
+import { TAGS } from './tags';
 
 export const genreOptions = GENRES.map((genre) => ({
   value: genre,
   label: genre,
+}));
+
+export const tagOptions = TAGS.map((tag) => ({
+  value: tag,
+  label: tag,
 }));
 
 export const seasonOptions = [

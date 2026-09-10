@@ -1,36 +1,45 @@
 import { X } from 'lucide-react';
+import type { FilterValues } from '../../types/FilterValues';
 
-interface FilterConfig {
-  key: string;
+export interface FilterConfig {
+  key: keyof FilterValues;
   label: string;
   options: { value: string; label: string }[];
 }
 
 interface ActiveFiltersProps {
   filters: FilterConfig[];
-  values: Record<string, string>;
-  onFilterChange: (key: string, value: string) => void;
+  values: FilterValues;
+  onRemove: (key: keyof FilterValues, value: string) => void;
   searchQuery?: string;
   onSearchChange?: (value: string) => void;
   onClearAll: () => void;
 }
 
+// return raw as an array
+function getSelectedValues(raw: string | string[] | undefined): string[] {
+  if (Array.isArray(raw)) return raw;
+  if (raw) return [raw];
+  return [];
+}
+
 export function ActiveFilters({
   filters,
   values,
-  onFilterChange,
+  onRemove,
   searchQuery,
   onSearchChange,
   onClearAll,
 }: ActiveFiltersProps) {
   const activeFilterChips = filters
-    .filter((f) => values[f.key])
-    .map((f) => ({
-      key: f.key,
-      display:
-        f.options.find((o) => o.value === values[f.key])?.label ??
-        values[f.key],
-    }));
+    .filter((f) => getSelectedValues(values[f.key]).length > 0)
+    .flatMap((f) =>
+      getSelectedValues(values[f.key]).map((val) => ({
+        key: `${f.key}-${val}`,
+        display: f.options.find((o) => o.value === val)?.label ?? val,
+        onRemove: () => onRemove(f.key, val),
+      }))
+    );
 
   const hasSearch = Boolean(searchQuery?.trim());
   const hasAny = hasSearch || activeFilterChips.length > 0;
@@ -61,7 +70,7 @@ export function ActiveFilters({
           {chip.display}
           <X
             className="w-3.5 h-3.5 cursor-pointer hover:text-purple-100"
-            onClick={() => onFilterChange(chip.key, '')}
+            onClick={chip.onRemove}
           />
         </span>
       ))}

@@ -64,11 +64,11 @@ export function FilterDropdown({
   }, [open]);
 
   const selectedLabel = options.find((o) => o.value === value)?.label;
-  const isSelected = Boolean(selectedLabel);
+  const isSelected = !!selectedLabel;
 
   return (
     <div
-      className="flex flex-col gap-1.5 sm:gap-2 shrink-0 min-w-[120px] sm:min-w-[150px]
+      className="flex flex-col gap-1.5 sm:gap-2 shrink-0 w-[140px] sm:w-[180px]
         sm:mx-1
         "
     >

@@ -15,27 +15,16 @@ import {
   formatOptions,
   airingStatusOptions,
   yearOptions,
+  tagOptions,
 } from '../data/filterOptions';
 import { FilterButton } from '../components/ui/FilterButton';
-import { ActiveFilters } from '../components/common/ActiveFilters';
+import {
+  ActiveFilters,
+  type FilterConfig,
+} from '../components/common/ActiveFilters';
 import { SortDropdown } from '../components/common/SortDropdown';
-
-// const genres = [
-//     "All",
-//     "Action",
-//     "Adventure",
-//     "Comedy",
-//     "Drama",
-//     "Ecchi",
-//     "Fantasy",
-//     "Horror",
-//     "Mystery",
-//     "Romance",
-//     "Sci-Fi",
-//     "Slice of Life",
-//     "Sports",
-//     "Supernatural",
-// ]
+import type { FilterValues } from '../types/FilterValues';
+import { MultiSelectFilterDropdown } from '../components/common/MultiSelectFilterDropdown';
 
 export const Browse = () => {
   // const {
@@ -43,19 +32,20 @@ export const Browse = () => {
   //     loading, animeEntryList, setAnimeEntryList
   // } = useBrowseData();
 
-  // const { activeGenre, setActiveGenre, genreResults, genreLoading } = useGenreFilter();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
-  const [filterValues, setFilterValues] = useState<Record<string, string>>({
-    genre: '',
+  const [filterValues, setFilterValues] = useState<FilterValues>({
+    genre: [],
+    tag: [],
     year: '',
     season: '',
     format: '',
     airingStatus: '',
   });
 
-  const filterConfig = [
-    { key: 'genre', label: 'Genres & Tags', options: genreOptions },
+  const filterConfig: FilterConfig[] = [
+    { key: 'genre', label: 'Genres', options: genreOptions },
+    { key: 'tag', label: 'Tags', options: tagOptions },
     { key: 'year', label: 'Year', options: yearOptions },
     { key: 'season', label: 'Season', options: seasonOptions },
     { key: 'format', label: 'Format', options: formatOptions },
@@ -70,6 +60,16 @@ export const Browse = () => {
   const { animeSearchResults: searchResults, searchLoading } =
     useAnimeSearch(searchQuery);
 
+  const handleRemove = (key: string, val: string) => {
+    if (key === 'genre' || key === 'tag') {
+      setFilterValues((prev) => ({
+        ...prev,
+        [key]: prev[key].filter((v) => v !== val),
+      }));
+    } else {
+      setFilterValues((prev) => ({ ...prev, [key]: '' }));
+    }
+  };
   // const updateEntry = (updated: UserAnimeEntry | null, anilistId: number) => {
   //     setAnimeEntryList(current => {
   //         // remove
@@ -184,26 +184,49 @@ export const Browse = () => {
         </div>
         {filterOpen && (
           <FilterBar
-            filters={filterConfig}
-            values={filterValues}
+            filters={filterConfig.filter(
+              (f) => f.key !== 'genre' && f.key !== 'tag'
+            )}
+            values={{
+              year: filterValues.year,
+              season: filterValues.season,
+              format: filterValues.format,
+              airingStatus: filterValues.airingStatus,
+            }}
             onFilterChange={(key, val) =>
               setFilterValues((prev) => ({ ...prev, [key]: val }))
             }
-          />
+          >
+            <MultiSelectFilterDropdown
+              label="Genres"
+              options={genreOptions}
+              values={filterValues.genre}
+              onChange={(vals) =>
+                setFilterValues((prev) => ({ ...prev, genre: vals }))
+              }
+            />
+            <MultiSelectFilterDropdown
+              label="Tags"
+              options={tagOptions}
+              values={filterValues.tag}
+              onChange={(vals) =>
+                setFilterValues((prev) => ({ ...prev, tag: vals }))
+              }
+            />
+          </FilterBar>
         )}
         <div className="flex items-center justify-between gap-2">
           <ActiveFilters
             filters={filterConfig}
             values={filterValues}
-            onFilterChange={(key, val) =>
-              setFilterValues((prev) => ({ ...prev, [key]: val }))
-            }
+            onRemove={handleRemove}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             onClearAll={() => {
               setSearchQuery('');
               setFilterValues({
-                genre: '',
+                genre: [],
+                tag: [],
                 year: '',
                 season: '',
                 format: '',
