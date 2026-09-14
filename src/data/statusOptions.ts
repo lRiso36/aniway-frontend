@@ -1,4 +1,4 @@
-import type { UserAnimeStatus } from "../types/UserAnimeEntryType"
+import type { UserAnimeStatus } from "../types/UserAnimeEntryType.types"
 
 export const statusOptions: {value: UserAnimeStatus, label: string}[] = [
     { value: "watching", label: "Watching" },

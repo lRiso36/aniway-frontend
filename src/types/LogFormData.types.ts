@@ -1,4 +1,4 @@
-import type { UserAnimeStatus } from "./UserAnimeEntryType";
+import type { UserAnimeStatus } from "./UserAnimeEntryType.types";
 
 export type LogFormData = {
     status: UserAnimeStatus | undefined,

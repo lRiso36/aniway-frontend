@@ -1,4 +1,4 @@
-import type { UserAnimeStatus } from '../types/UserAnimeEntryType';
+import type { UserAnimeStatus } from '../types/UserAnimeEntryType.types';
 import client from './client';
 
 interface logAnimeData {

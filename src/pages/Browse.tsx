@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import { BrowseRow } from "../components/BrowseComponents/BrowseRow";
 // import type { UserAnimeEntry } from "../types/UserAnimeEntry";
 // import { AnimeCard } from "../components/AnimeCard";
 // import { BareLoading, Loading } from "../components/Loading";
 // import { useBrowseData } from "../hooks/browse/useBrowseData";
 // import { useGenreFilter } from "../hooks/browse/useGenreFilter";
-import { useAnimeSearch } from '../hooks/useAnimeSearch';
 import { AnimeCard } from '../components/common/AnimeCard';
 import { AnimeCardSkeleton } from '../components/ui/AnimeCardSkeleton';
 import { FilterBar } from '../components/common/FilterBar';
@@ -23,14 +22,16 @@ import {
   type FilterConfig,
 } from '../components/common/ActiveFilters';
 import { SortDropdown } from '../components/common/SortDropdown';
-import type { FilterValues } from '../types/FilterValues';
+import type { FilterValues } from '../types/FilterValues.types';
 import { MultiSelectFilterDropdown } from '../components/common/MultiSelectFilterDropdown';
+import { useAnimeFilter } from '../hooks/useAnimeFilter';
 
 export const Browse = () => {
   // const {
   //     trendingAnime, topRatedAnime, trendingMovies, hiddenGems,
   //     loading, animeEntryList, setAnimeEntryList
   // } = useBrowseData();
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
@@ -55,10 +56,16 @@ export const Browse = () => {
       options: airingStatusOptions,
     },
   ];
-  const [sortBy, setSortBy] = useState('TITLE');
+  const [sortBy, setSortBy] = useState('');
 
-  const { animeSearchResults: searchResults, searchLoading } =
-    useAnimeSearch(searchQuery);
+  const {
+    animeSearchResults: searchResults,
+    searchLoading,
+    loadNextPage,
+    loadingMore,
+    isSearching
+  } =
+    useAnimeFilter(filterValues, sortBy, searchQuery);
 
   const handleRemove = (key: string, val: string) => {
     if (key === 'genre' || key === 'tag') {
@@ -106,6 +113,23 @@ export const Browse = () => {
   // if (loading) return (
   //     cool thing anilist does
   // )
+
+  //for paginate on scroll
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadNextPage();
+        }
+      },
+      { threshold: 0, rootMargin: '200px' }
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [loadNextPage])
 
   return (
     <div className="min-h-screen bg-[#0a0a14] ">
@@ -234,13 +258,13 @@ export const Browse = () => {
               });
             }}
           />
-          {searchQuery.trim() && (
+          {isSearching && (
             <div className="hidden sm:block">
               <SortDropdown value={sortBy} onChange={setSortBy} />
             </div>
           )}
         </div>
-        {searchQuery.trim() &&
+        {isSearching &&
           //search mode
           (searchLoading ? (
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 sm:gap-6 gap-4">
@@ -251,23 +275,32 @@ export const Browse = () => {
               ))}
             </div>
           ) : searchResults?.length > 0 ? (
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 sm:gap-6 gap-4">
-              {searchResults.map((anime) => (
-                <div
-                  key={anime.anilistId}
-                  className="w-full max-w-[160px] mx-auto"
-                >
-                  <AnimeCard
-                    anime={anime}
+            <>
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 sm:gap-6 gap-4">
+                {searchResults.map((anime) => (
+                  <div
+                    key={anime.anilistId}
+                    className="w-full max-w-[160px] mx-auto"
+                  >
+                    <AnimeCard
+                      anime={anime}
                     // entry={entries.find(e => e.anilistId === anime.anilistId)}
                     // onEntryChange={updateEntry}
-                  />
-                </div>
-              ))}
-            </div>
+                    />
+                  </div>
+                ))}
+                {loadingMore &&
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <div key={`skeleton-${i}`} className="w-full max-w-[160px] mx-auto">
+                      <AnimeCardSkeleton />
+                    </div>
+                  ))}
+              </div>
+              <div ref={sentinelRef} className="h-1" />
+            </>
           ) : (
             <p className="text-zinc-500 text-sm tracking-wide text-center pt-10">
-              No anime found for{' '}
+              No anime found
               <span className="text-purple-400">'{searchQuery.trim()}'</span>
             </p>
           ))}

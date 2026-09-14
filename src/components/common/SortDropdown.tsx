@@ -10,9 +10,10 @@ interface SortOption {
 const sortOptions: SortOption[] = [
   { value: 'TITLE', label: 'Title' },
   { value: 'POPULARITY_DESC', label: 'Popularity' },
-  { value: 'TRENDING_DESC', label: 'Trending' },
+  // { value: 'TRENDING_DESC', label: 'Trending' },
   { value: 'SCORE_DESC', label: 'Average Score' },
   { value: 'FAVOURITES_DESC', label: 'Favorites' },
+  { value: '', label: 'Default'}
 ];
 
 interface SortDropdownProps {
@@ -63,7 +64,7 @@ export function SortDropdown({ value, onChange }: SortDropdownProps) {
   }, [open]);
 
   const selectedLabel =
-    sortOptions.find((o) => o.value === value)?.label ?? 'Sort';
+    sortOptions.find((o) => o.value === value)?.label ?? 'Sort By';
 
   return (
     <div className="shrink-0">

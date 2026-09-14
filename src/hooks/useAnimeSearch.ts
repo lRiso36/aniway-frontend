@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { AnimeType } from '../types/AnimeType';
+import type { AnimeType } from '../types/AnimeType.types';
 import { getAnimeBySearch } from '../api/anime';
 import { toastError } from '../lib/toast';
 

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { FieldBox } from "./LogFieldBox";
-import type { UserAnimeStatus } from "../../types/UserAnimeEntryType";
+import type { UserAnimeStatus } from "../../types/UserAnimeEntryType.types";
 type StatusOption = {
     value: UserAnimeStatus,
     label: string,

@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import type { FilterValues } from '../../types/FilterValues';
+import type { FilterValues } from '../../types/FilterValues.types';
 
 export interface FilterConfig {
   key: keyof FilterValues;

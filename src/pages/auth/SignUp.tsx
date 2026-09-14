@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AuthContainer } from '../../components/common/AuthContainer';
-import type { SignUpFormData } from '../../types/SignUpFormData';
+import type { SignUpFormData } from '../../types/SignUpFormData.types';
 import { SignUpForm } from '../../components/common/SignUpForm';
 import { AuthLayout } from '../../components/layout/AuthLayout';
 import { AuthNav } from '../../components/common/AuthNav';

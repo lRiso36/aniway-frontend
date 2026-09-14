@@ -1,4 +1,4 @@
-import type { AnimeType } from '../../types/AnimeType';
+import type { AnimeType } from '../../types/AnimeType.types';
 // import type { UserAnimeEntry, UserAnimeStatus } from "../types/UserAnimeEntry";
 // import { AnimeCardMenu } from "./AnimeCardMenu";
 // import { RemoveModal } from "./RemoveModal";
@@ -11,7 +11,7 @@ import { useAnimeCard } from '../../hooks/useAnimeCard';
 import { AnimeCardMenu } from './AnimeCardMenu';
 import { Heart, Tv, Star, ListPlus } from 'lucide-react';
 import { LogModal } from './LogModal';
-import type { UserAnimeEntry } from '../../types/UserAnimeEntryType';
+import type { UserAnimeEntry } from '../../types/UserAnimeEntryType.types';
 
 type AnimeCardType = {
   anime: AnimeType;

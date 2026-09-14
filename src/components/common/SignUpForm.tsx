@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FormInput } from '../ui/FormInput';
-import type { SignUpFormData } from '../../types/SignUpFormData';
+import type { SignUpFormData } from '../../types/SignUpFormData.types';
 import { useSignUpValidation } from '../../hooks/useSignUpValidation';
 import { AuthButtons } from '../ui/AuthButtons';
 import { registerUser } from '../../api/auth';

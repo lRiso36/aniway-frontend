@@ -2,10 +2,10 @@ import { useState } from 'react';
 // import { logAnime } from "../../services/userAnimeService";
 
 import { toastError } from '../lib/toast';
-import type { AnimeType } from '../types/AnimeType';
-import type { UserAnimeEntry } from '../types/UserAnimeEntryType';
+import type { AnimeType } from '../types/AnimeType.types';
+import type { UserAnimeEntry } from '../types/UserAnimeEntryType.types';
 import { logAnime } from '../api/userAnime';
-import type { LogFormData } from '../types/LogFormData';
+import type { LogFormData } from '../types/LogFormData.types';
 
 export const useLogModal = (
   anime: AnimeType,

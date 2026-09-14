@@ -1,14 +1,14 @@
-import type { AnimeType } from '../../types/AnimeType';
+import type { AnimeType } from '../../types/AnimeType.types';
 import type {
   UserAnimeEntry,
   UserAnimeStatus,
-} from '../../types/UserAnimeEntryType';
+} from '../../types/UserAnimeEntryType.types';
 import { useState } from 'react';
 import { NumberStepper } from '../ui/NumberStepper';
 import { useLogModal } from '../../hooks/useLogModal';
 import { StatusDropdown } from '../ui/StatusDropdwon';
 import { FieldLabel } from '../ui/LogFieldLabel';
-import type { LogFormData } from '../../types/LogFormData';
+import type { LogFormData } from '../../types/LogFormData.types';
 import { statusOptions } from '../../data/statusOptions';
 import { Heart } from 'lucide-react';
 import { useToggleFavorite } from '../../hooks/useToggleFavorite';
