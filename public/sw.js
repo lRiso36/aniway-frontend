@@ -13,6 +13,7 @@ self.addEventListener('push', (event) => {
     );
 });
 
+//on click
 self.addEventListener('notificationClick', (event) => {
     event.notification.close();
 
