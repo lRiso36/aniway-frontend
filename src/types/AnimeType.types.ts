@@ -12,7 +12,6 @@ export type AnimeType = {
   averageScore: number | null;
   genres: string[];
   description: string | null;
-  cachedAt: string;
   detailsCached: boolean;
   startDate?: { year?: number; month?: number; day?: number };
 };
