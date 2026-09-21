@@ -13,7 +13,7 @@ const sortOptions: SortOption[] = [
   // { value: 'TRENDING_DESC', label: 'Trending' },
   { value: 'SCORE_DESC', label: 'Average Score' },
   { value: 'FAVOURITES_DESC', label: 'Favorites' },
-  { value: '', label: 'Default'}
+  { value: '', label: 'Default' },
 ];
 
 interface SortDropdownProps {

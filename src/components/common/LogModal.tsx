@@ -12,6 +12,7 @@ import type { LogFormData } from '../../types/LogFormData.types';
 import { statusOptions } from '../../data/statusOptions';
 import { Heart } from 'lucide-react';
 import { useToggleFavorite } from '../../hooks/useToggleFavorite';
+import { DatePicker } from '../ui/DatePicker';
 
 type LogModalTypes = {
   isOpen: boolean;
@@ -88,7 +89,7 @@ export const LogModal = ({
         <div className="relative rounded-t-xl">
           {/* banner */}
           <div className="h-40 sm:h-50 relative overflow-hidden rounded-t-xl mb-8 sm:mb-12">
-            {anime.bannerImage && (
+            {anime.bannerImage ? (
               <>
                 <div
                   className="absolute inset-0 bg-cover bg-center"
@@ -96,6 +97,13 @@ export const LogModal = ({
                 />
                 <div className="absolute inset-0 bg-[#1e1e2e]/60" />
               </>
+            ) : (
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: `radial-gradient(circle at 30% 20%, ${anime.coverColor ?? '#7f77dd'}55, #1e1e2e 70%)`,
+                }}
+              />
             )}
 
             <button
@@ -166,31 +174,17 @@ export const LogModal = ({
 
           <div>
             <FieldLabel>Start Date</FieldLabel>
-            <input
-              type="date"
+            <DatePicker
               value={formData.startDate}
-              onChange={(newStart) =>
-                updateField('startDate', newStart.target.value)
-              }
-              className="bg-[#2a2a3e] text-white text-sm rounded-lg px-3 py-2 border border-white/10 w-full"
+              onChange={(val) => updateField('startDate', val)}
             />
-            <button
-              onClick={() => updateField('startDate', '')}
-              className="text-white/30 hover:text-white/60 transition-colors shrink-0"
-            >
-              ✕
-            </button>
           </div>
 
           <div>
             <FieldLabel>Finish Date</FieldLabel>
-            <input
-              type="date"
+            <DatePicker
               value={formData.finishDate}
-              onChange={(newEnd) =>
-                updateField('startDate', newEnd.target.value)
-              }
-              className="bg-[#2a2a3e] text-white text-sm rounded-lg px-3 py-2 border border-white/10 w-full"
+              onChange={(val) => updateField('finishDate', val)}
             />
           </div>
 

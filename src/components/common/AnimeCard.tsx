@@ -26,7 +26,11 @@ type AnimeCardType = {
   onRemove?: (anilistId: number) => void;
 };
 
-export const AnimeCard = ({ anime, entry, readOnly = false }: AnimeCardType) => {
+export const AnimeCard = ({
+  anime,
+  entry,
+  readOnly = false,
+}: AnimeCardType) => {
   const isFavorite = true;
   const MENU_ITEMS = [
     {
@@ -148,25 +152,23 @@ export const AnimeCard = ({ anime, entry, readOnly = false }: AnimeCardType) => 
                 </p> */}
       </div>
 
-       {!readOnly && (
-            <>
-              <LogModal
-                isOpen={activeModal === 'log'}
-                onClose={() => setActiveModal(null)}
-                anime={anime}
-                currentEntry={entry}
-                onSave={(updated) => {
-                  setActiveModal(null);
-                  // onEntryChange?.(updated, anime.anilistId)
-                }}
-              />
-              
-              </>
-  )}
-
+      {!readOnly && (
+        <>
+          <LogModal
+            isOpen={activeModal === 'log'}
+            onClose={() => setActiveModal(null)}
+            anime={anime}
+            currentEntry={entry}
+            onSave={(updated) => {
+              setActiveModal(null);
+              console.log(updated)
+              // onEntryChange?.(updated, anime.anilistId)
+            }}
+          />
+        </>
+      )}
     </div>
 
-  
     //       <div>
     //         <p className="-mt-1 ml-1 text-white text-xs lg:text-base font-medium line-clamp-1">
     //           {anime.title.english ?? anime.title.romaji}
@@ -187,21 +189,21 @@ export const AnimeCard = ({ anime, entry, readOnly = false }: AnimeCardType) => 
     //         </div>
     //       )}
 
-  //         {!readOnly && (
-  //           <>
-  //             <LogModal
-  //               isOpen={activeModal === 'log'}
-  //               onClose={() => setActiveModal(null)}
-  //               anime={anime}
-  //               currentEntry={entry}
-  //               onSave={(updated) => {
-  //                 setActiveModal(null);
-  //                 onEntryChange?.(updated, anime.anilistId)
-  //               }}
-  //             />
-              
-  //             </>
-  // )}
+    //         {!readOnly && (
+    //           <>
+    //             <LogModal
+    //               isOpen={activeModal === 'log'}
+    //               onClose={() => setActiveModal(null)}
+    //               anime={anime}
+    //               currentEntry={entry}
+    //               onSave={(updated) => {
+    //                 setActiveModal(null);
+    //                 onEntryChange?.(updated, anime.anilistId)
+    //               }}
+    //             />
+
+    //             </>
+    // )}
     //           <RemoveModal
     //             isOpen={activeModal === 'remove'}
     //             onClose={() => setActiveModal(null)}

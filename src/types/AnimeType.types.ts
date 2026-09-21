@@ -14,6 +14,7 @@ export type AnimeType = {
   description: string | null;
   detailsCached: boolean;
   startDate?: { year?: number; month?: number; day?: number };
+  coverColor: string | null;
 };
 
 export type VoiceActor = {

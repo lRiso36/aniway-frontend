@@ -5,7 +5,7 @@ const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
   timeout: 10000,
-  paramsSerializer: {indexes: null}
+  paramsSerializer: { indexes: null },
 });
 
 client.interceptors.request.use((config) => {

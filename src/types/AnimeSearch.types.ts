@@ -1,4 +1,4 @@
-import type { AnimeType } from "./AnimeType.types";
+import type { AnimeType } from './AnimeType.types';
 
 export interface AnimeFilterResponse {
   results: AnimeType[];

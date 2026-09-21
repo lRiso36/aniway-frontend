@@ -11,3 +11,67 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.rdp-root {
+  --rdp-color: #e8edf2; /* Default text color */
+  --rdp-accent-color: #e74c3c; /* Background of selected day */
+  --rdp-background-color: #fce4e4; /* Hover background color */
+  --rdp-day-font-size: 0.9rem; /* Font size for days */
+  --rdp-border-radius: 8px; /* Roundness of the day buttons */
+}
+
+/* add to your global stylesheet (e.g. index.css) */
+.rdp-dark {
+  /* --rdp-accent-color: #7c3aed;  */
+  /* purple-600, matches your Save button */
+  --rdp-accent-background-color: rgba(124, 58, 237, 0.15);
+  --rdp-day-height: 30px;
+  --rdp-day-width: 30px;
+  --rdp-day_button-border-radius: 8px;
+  --rdp-selected-border: none;
+  --rdp-today-color: #c4b5fd; /* purple-300, for today's date number */
+  --rdp-outside-opacity: 0.35;
+  --rdp-disabled-opacity: 0.3;
+}
+
+.rdp-dark {
+  --rdp-day-height: 30px;
+  --rdp-day-width: 30px;
+  --rdp-gap: 2px; /* spacing between cells/rows */
+  font-size: 12px; /* scales weekday labels, caption, day numbers together */
+}
+
+.rdp-dark .rdp-day_button {
+  color: white;
+}
+
+.rdp-dark .rdp-day_button:hover:not([disabled]) {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.rdp-dark .rdp-selected .rdp-day_button {
+  background-color: #7c3aed;
+  color: white;
+  font-weight: 500;
+}
+
+.rdp-dark .rdp-month_caption {
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.rdp-dark .rdp-weekday {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.rdp-dark .rdp-nav button {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.rdp-dark .rdp-nav button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+}

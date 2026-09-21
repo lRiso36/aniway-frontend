@@ -63,9 +63,8 @@ export const Browse = () => {
     searchLoading,
     loadNextPage,
     loadingMore,
-    isSearching
-  } =
-    useAnimeFilter(filterValues, sortBy, searchQuery);
+    isSearching,
+  } = useAnimeFilter(filterValues, sortBy, searchQuery);
 
   const handleRemove = (key: string, val: string) => {
     if (key === 'genre' || key === 'tag') {
@@ -129,7 +128,7 @@ export const Browse = () => {
 
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
-  }, [loadNextPage])
+  }, [loadNextPage]);
 
   return (
     <div className="min-h-screen bg-[#0a0a14] ">
@@ -284,14 +283,17 @@ export const Browse = () => {
                   >
                     <AnimeCard
                       anime={anime}
-                    // entry={entries.find(e => e.anilistId === anime.anilistId)}
-                    // onEntryChange={updateEntry}
+                      // entry={entries.find(e => e.anilistId === anime.anilistId)}
+                      // onEntryChange={updateEntry}
                     />
                   </div>
                 ))}
                 {loadingMore &&
                   Array.from({ length: 6 }).map((_, i) => (
-                    <div key={`skeleton-${i}`} className="w-full max-w-[160px] mx-auto">
+                    <div
+                      key={`skeleton-${i}`}
+                      className="w-full max-w-[160px] mx-auto"
+                    >
                       <AnimeCardSkeleton />
                     </div>
                   ))}
