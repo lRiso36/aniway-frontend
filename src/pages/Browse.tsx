@@ -26,13 +26,14 @@ import { MultiSelectFilterDropdown } from '../components/common/MultiSelectFilte
 import { useAnimeFilter } from '../hooks/useAnimeFilter';
 import { useBrowseData } from '../hooks/useBrowseData';
 import type { UserAnimeEntry } from '../types/UserAnimeEntryType.types';
+import { BrowseRow } from '../components/ui/browse/browseRow';
 
 export const Browse = () => {
   // const {
   //     trendingAnime, topRatedAnime, trendingMovies, hiddenGems,
   //     loading, animeEntryList, setAnimeEntryList
   // } = useBrowseData();
-  const { animeEntryList, setAnimeEntryList } = useBrowseData();
+  const { animeEntryList, setAnimeEntryList, recommended } = useBrowseData();
 
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -60,13 +61,14 @@ export const Browse = () => {
     },
   ];
   const [sortBy, setSortBy] = useState('');
-
+  // const showBrowse = 
   const {
     animeSearchResults: searchResults,
     searchLoading,
     loadNextPage,
     loadingMore,
     isSearching,
+    showBrowse
   } = useAnimeFilter(filterValues, sortBy, searchQuery);
 
   const handleRemove = (key: string, val: string) => {
@@ -315,6 +317,11 @@ export const Browse = () => {
               <span className="text-purple-400">'{searchQuery.trim()}'</span>
             </p>
           ))}
+        {
+          showBrowse && (
+            <BrowseRow title="Recommended" items={recommended} entries={animeEntryList} onEntryChange={updateEntry} />
+          )
+        }
       </div>
     </div>
   );

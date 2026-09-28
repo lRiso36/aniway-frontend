@@ -38,9 +38,11 @@ export const useAnimeFilter = (
     filterValues.airingStatus !== '';
 
   const isSearching = query.trim() !== '' || hasActiveFilters;
+  const showBrowse = !query.trim() && !hasActiveFilters
 
   const loadNextPage = () => {
     if (!hasNextPage || searchLoading) return;
+    setLoadingMore(true);
     setPage((prev) => prev + 1);
   };
 
@@ -72,8 +74,6 @@ export const useAnimeFilter = (
   useEffect(() => {
     if (page === 1) return;
 
-    setLoadingMore(true);
-
     const fetchNextPage = async () => {
       try {
         const response = await getAnimeByFilters(params);
@@ -95,5 +95,6 @@ export const useAnimeFilter = (
     loadNextPage,
     loadingMore,
     isSearching,
+    showBrowse
   };
 };
