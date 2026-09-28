@@ -10,14 +10,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAnimeCard } from '../../hooks/useAnimeCard';
 import { AnimeCardMenu } from './AnimeCardMenu';
 import { Heart, Tv, Star, ListPlus } from 'lucide-react';
-import { LogModal } from './LogModal';
+import { LogModal } from './AnimeCarMenu/LogModal';
 import type { UserAnimeEntry } from '../../types/UserAnimeEntryType.types';
+import { useToggleFavorite } from '../../hooks/useToggleFavorite';
 
 type AnimeCardType = {
   anime: AnimeType;
   entry?: UserAnimeEntry;
   readOnly?: boolean;
-  //   onEntryChange?: (updated: UserAnimeEntry | null, anilistId: number) => void;
+  onEntryChange?: (updated: UserAnimeEntry | null, anilistId: number) => void;
   //   onStatusChange?: (anilistId: number, status: UserAnimeStatus) => void;
   onRate?: (anilistId: number) => void;
   onReview?: (anilistId: number) => void;
@@ -30,8 +31,15 @@ export const AnimeCard = ({
   anime,
   entry,
   readOnly = false,
+  onEntryChange,
 }: AnimeCardType) => {
-  const isFavorite = true;
+  const canRemove = !!entry;
+  const { isFavorite, toggleFavorite } = useToggleFavorite(
+    anime._id,
+    entry?.isFavorite ?? false,
+    (updated) => onEntryChange?.(updated, anime.anilistId)
+  );
+
   const MENU_ITEMS = [
     {
       label: (
@@ -74,8 +82,6 @@ export const AnimeCard = ({
     },
   ];
 
-  //   const canRemove = !!entry;
-  const canRemove = true;
   const navigate = useNavigate();
 
   const {
@@ -133,7 +139,7 @@ export const AnimeCard = ({
           onClose={() => setMenuOpen(false)}
           onSelect={(id) => {
             if (id === 'log') setActiveModal('log');
-            // if (id === 'favorite') toggleFavorite();
+            if (id === 'favorite') toggleFavorite();
             if (id === 'remove') setActiveModal('remove');
             if (id === 'rate-review') setActiveModal('rate-review');
             if (id === 'list') setActiveModal('list');
@@ -152,7 +158,7 @@ export const AnimeCard = ({
                 </p> */}
       </div>
 
-      {!readOnly && (
+      {!readOnly && activeModal === 'log' && (
         <>
           <LogModal
             isOpen={activeModal === 'log'}
@@ -161,8 +167,8 @@ export const AnimeCard = ({
             currentEntry={entry}
             onSave={(updated) => {
               setActiveModal(null);
-              console.log(updated)
-              // onEntryChange?.(updated, anime.anilistId)
+              console.log(updated);
+              onEntryChange?.(updated, anime.anilistId);
             }}
           />
         </>

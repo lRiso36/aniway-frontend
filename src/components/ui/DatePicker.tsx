@@ -1,8 +1,9 @@
 // components/ui/DatePicker.tsx
 import { useState, useRef, useEffect } from 'react';
-import { DayPicker } from 'react-day-picker';
+import { DayPicker, getDefaultClassNames } from 'react-day-picker';
 import { Calendar, X } from 'lucide-react';
 import 'react-day-picker/style.css';
+import './DatePicker.css';
 
 type DatePickerProps = {
   value: string; // "yyyy-MM-dd" or ""
@@ -19,13 +20,10 @@ const isValidDate = (str: string) => {
 
 export const DatePicker = ({ value, onChange }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [inputText, setInputText] = useState(value);
+  const [draft, setDraft] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // keep local text in sync when value changes externally (picker click, clear button)
-  useEffect(() => {
-    setInputText(value);
-  }, [value]);
+  const defaultClassNames = getDefaultClassNames();
+  const inputText = draft ?? value;
 
   const selected = value ? new Date(value + 'T00:00:00') : undefined;
 
@@ -48,19 +46,14 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
     const mm = String(date.getMonth() + 1).padStart(2, '0');
     const dd = String(date.getDate()).padStart(2, '0');
     onChange(`${yyyy}-${mm}-${dd}`);
+    setDraft(null);
     setIsOpen(false);
   };
 
   const handleBlur = () => {
-    if (inputText === '') {
-      onChange('');
-      return;
-    }
-    if (isValidDate(inputText)) {
-      onChange(inputText);
-    } else {
-      setInputText(value); // revert to last valid value
-    }
+    if (draft === null) return;
+    if (draft === '' || isValidDate(draft)) onChange(draft);
+    setDraft(null);
   };
 
   return (
@@ -74,7 +67,7 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
           type="text"
           placeholder="yyyy-mm-dd"
           value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
+          onChange={(e) => setDraft(e.target.value)}
           onFocus={() => setIsOpen(true)}
           onBlur={handleBlur}
           className="flex-1 bg-transparent text-sm text-white placeholder:text-white/30 outline-none min-w-0"
@@ -91,8 +84,9 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 bg-[#1e1e2e] border border-white/10 rounded-lg shadow-lg p-2">
+        <div className="absolute z-50 mt-2 bg-[#1e1e2e] border border-white/10 rounded-lg shadow-lg p-2 rdp-dark">
           <DayPicker
+            classNames={{ root: `${defaultClassNames.root} rdp-dark` }}
             mode="single"
             selected={selected}
             onSelect={handleSelect}

@@ -37,7 +37,9 @@ export const AnimeCardMenu = ({
 
   const select = (id: string) => {
     onSelect(id);
-    onClose();
+    if (id !== 'favorite') {
+      onClose();
+    }
   };
 
   if (isCard) {

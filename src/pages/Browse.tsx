@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 // import { AnimeCard } from "../components/AnimeCard";
 // import { BareLoading, Loading } from "../components/Loading";
 // import { useBrowseData } from "../hooks/browse/useBrowseData";
-// import { useGenreFilter } from "../hooks/browse/useGenreFilter";
 import { AnimeCard } from '../components/common/AnimeCard';
 import { AnimeCardSkeleton } from '../components/ui/AnimeCardSkeleton';
 import { FilterBar } from '../components/common/FilterBar';
@@ -25,12 +24,16 @@ import { SortDropdown } from '../components/common/SortDropdown';
 import type { FilterValues } from '../types/FilterValues.types';
 import { MultiSelectFilterDropdown } from '../components/common/MultiSelectFilterDropdown';
 import { useAnimeFilter } from '../hooks/useAnimeFilter';
+import { useBrowseData } from '../hooks/useBrowseData';
+import type { UserAnimeEntry } from '../types/UserAnimeEntryType.types';
 
 export const Browse = () => {
   // const {
   //     trendingAnime, topRatedAnime, trendingMovies, hiddenGems,
   //     loading, animeEntryList, setAnimeEntryList
   // } = useBrowseData();
+  const { animeEntryList, setAnimeEntryList } = useBrowseData();
+
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -76,39 +79,43 @@ export const Browse = () => {
       setFilterValues((prev) => ({ ...prev, [key]: '' }));
     }
   };
-  // const updateEntry = (updated: UserAnimeEntry | null, anilistId: number) => {
-  //     setAnimeEntryList(current => {
-  //         // remove
-  //         if (updated === null) {
-  //             return current.filter(item => item.entry.anilistId !== anilistId)
-  //         }
 
-  //         // update existing
-  //         if (current.find(item => item.entry.anilistId === anilistId)) {
-  //             return current.map(item =>
-  //                 item.entry.anilistId === anilistId
-  //                     ? { entry: updated, anime: item.anime }
-  //                     : item
-  //             )
-  //         }
+  const updateEntry = (updated: UserAnimeEntry | null, anilistId: number) => {
+    setAnimeEntryList((current) => {
+      // remove
+      if (updated === null) {
+        return current.filter((e) => e.anilistId !== anilistId);
+      }
 
-  //         //new entry if anime was in list before
-  //         const animeData =
-  //             trendingAnime.find(a => a.anilistId === anilistId) ||
-  //             topRatedAnime.find(a => a.anilistId === anilistId) ||
-  //             trendingMovies.find(a => a.anilistId === anilistId) ||
-  //             hiddenGems.find(a => a.anilistId === anilistId) ||
-  //             searchResults.find(a => a.anilistId === anilistId) ||
-  //             genreResults.find(a => a.anilistId === anilistId);
+      return current.some((e) => e.anilistId === anilistId)
+        ? current.map((e) => (e.anilistId === anilistId ? updated : e))
+        : [...current, updated];
 
-  //         if (!animeData) return current;
+      //         // update existing
+      // if (current.find(item => item.entry.anilistId === anilistId)) {
+      //     return current.map(item =>
+      //         item.entry.anilistId === anilistId
+      //             ? { entry: updated, anime: item.anime }
+      //             : item
+      //     )
+      // }
 
-  //         return [...current, { entry: updated, anime: animeData }]
-  //     })
-  // }
+      // //new entry if anime was in list before
+      // const animeData =
+      //     trendingAnime.find(a => a.anilistId === anilistId) ||
+      //     topRatedAnime.find(a => a.anilistId === anilistId) ||
+      //     trendingMovies.find(a => a.anilistId === anilistId) ||
+      //     hiddenGems.find(a => a.anilistId === anilistId) ||
+      //     searchResults.find(a => a.anilistId === anilistId) ||
+      //     genreResults.find(a => a.anilistId === anilistId);
+
+      // if (!animeData) return current;
+
+      // return [...current, { entry: updated, anime: animeData }]
+    });
+  };
 
   // const entries = animeEntryList.map(item => item.entry);
-
   // if (loading) return (
   //     cool thing anilist does
   // )
@@ -283,8 +290,10 @@ export const Browse = () => {
                   >
                     <AnimeCard
                       anime={anime}
-                      // entry={entries.find(e => e.anilistId === anime.anilistId)}
-                      // onEntryChange={updateEntry}
+                      entry={animeEntryList.find(
+                        (e) => e.anilistId === anime.anilistId
+                      )}
+                      onEntryChange={updateEntry}
                     />
                   </div>
                 ))}

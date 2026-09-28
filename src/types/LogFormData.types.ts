@@ -6,6 +6,7 @@ export type LogFormData = {
   score: number;
   startDate: string;
   finishDate: string;
-  totalRewatches: number;
+  repeatCount: number;
   notes: string;
+  isFavorite: boolean;
 };

@@ -1,18 +1,18 @@
-import type { AnimeType } from '../../types/AnimeType.types';
+import type { AnimeType } from '../../../types/AnimeType.types';
 import type {
   UserAnimeEntry,
   UserAnimeStatus,
-} from '../../types/UserAnimeEntryType.types';
+} from '../../../types/UserAnimeEntryType.types';
 import { useState } from 'react';
-import { NumberStepper } from '../ui/NumberStepper';
-import { useLogModal } from '../../hooks/useLogModal';
-import { StatusDropdown } from '../ui/StatusDropdwon';
-import { FieldLabel } from '../ui/LogFieldLabel';
-import type { LogFormData } from '../../types/LogFormData.types';
-import { statusOptions } from '../../data/statusOptions';
+import { NumberStepper } from '../../ui/NumberStepper';
+import { useLogModal } from '../../../hooks/useLogModal';
+import { StatusDropdown } from '../../ui/StatusDropdwon';
+import { FieldLabel } from '../../ui/LogFieldLabel';
+import type { LogFormData } from '../../../types/LogFormData.types';
+import { statusOptions } from '../../../data/statusOptions';
 import { Heart } from 'lucide-react';
-import { useToggleFavorite } from '../../hooks/useToggleFavorite';
-import { DatePicker } from '../ui/DatePicker';
+import { useToggleFavorite } from '../../../hooks/useToggleFavorite';
+import { DatePicker } from '../../ui/DatePicker';
 
 type LogModalTypes = {
   isOpen: boolean;
@@ -35,11 +35,12 @@ export const LogModal = ({
     score: currentEntry?.score ?? 0,
     startDate: currentEntry?.startDate ?? '',
     finishDate: currentEntry?.finishDate ?? '',
-    totalRewatches: currentEntry?.totalRewatches ?? 0,
+    repeatCount: currentEntry?.repeatCount ?? 0,
     notes: currentEntry?.notes ?? '',
+    isFavorite: currentEntry?.isFavorite ?? false,
   };
   const [formData, setFormData] = useState<LogFormData>(initialFormData);
-  const { isFavorite, setIsFavorite } = useToggleFavorite(
+  const { isFavorite } = useToggleFavorite(
     anime._id,
     currentEntry?.isFavorite ?? false
   );
@@ -69,7 +70,7 @@ export const LogModal = ({
     });
   };
 
-  const { isSaving, handleSave } = useLogModal(anime, currentEntry, onSave);
+  const { isSaving, handleSave } = useLogModal(anime, onSave);
 
   const handleBackdropMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -121,8 +122,8 @@ export const LogModal = ({
               </p>
               <Heart
                 className={`w-4 h-4 sm:w-5.5 sm:h-5.5 shrink-0 cursor-pointer transition-transform duration-200 hover:scale-125 active:scale-90 ${isFavorite ? 'text-red-400' : 'text-white'} transition`}
-                {...(isFavorite ? { fill: 'currentColor' } : {})}
-                onClick={() => setIsFavorite(!isFavorite)}
+                {...(formData.isFavorite ? { fill: 'currentColor' } : {})}
+                onClick={() => updateField('isFavorite', !formData.isFavorite)}
               />
               <button
                 onClick={() => handleSave(formData)}
@@ -191,10 +192,8 @@ export const LogModal = ({
           <div>
             <FieldLabel>Total Rewatches</FieldLabel>
             <NumberStepper
-              value={formData.totalRewatches}
-              onChange={(newRewatch) =>
-                updateField('totalRewatches', newRewatch)
-              }
+              value={formData.repeatCount}
+              onChange={(newRewatch) => updateField('repeatCount', newRewatch)}
               max={1000}
             />
           </div>

@@ -3,15 +3,16 @@ export type UserAnimeStatus =
 
 export type UserAnimeEntry = {
   _id: string;
-  userId: string;
-  animeId: string;
+  user: string;
+  anime: string;
+  anilistId: number;
   status: UserAnimeStatus;
-  currentEpisode: number;
-  score: number;
-  startDate: string;
-  finishDate: string;
-  totalRewatches: number;
-  notes: string;
+  currentEpisode?: number;
+  score?: number;
+  startDate?: string;
+  finishDate?: string;
+  repeatCount: number;
+  notes?: string;
   isFavorite: boolean;
   createdAt: string;
   updatedAt: string;

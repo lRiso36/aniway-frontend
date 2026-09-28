@@ -9,7 +9,6 @@ import type { LogFormData } from '../types/LogFormData.types';
 
 export const useLogModal = (
   anime: AnimeType,
-  currentEntry: UserAnimeEntry | undefined,
   onSave: (updated: UserAnimeEntry) => void
 ) => {
   const [isSaving, setIsSaving] = useState(false);
@@ -21,11 +20,12 @@ export const useLogModal = (
         animeId: anime._id, // see note below
         status: formData.status ?? 'planning',
         currentEpisode: formData.currentEpisode,
-        repeatCount: formData.totalRewatches,
+        repeatCount: formData.repeatCount,
         score: formData.score,
-        startDate: formData.startDate,
-        finishDate: formData.finishDate,
+        startDate: formData.startDate || undefined,
+        finishDate: formData.finishDate || undefined,
         notes: formData.notes,
+        isFavorite: formData.isFavorite,
       });
 
       onSave(savedEntry);
