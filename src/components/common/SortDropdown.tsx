@@ -10,7 +10,7 @@ interface SortOption {
 const sortOptions: SortOption[] = [
   { value: 'TITLE', label: 'Title' },
   { value: 'POPULARITY_DESC', label: 'Popularity' },
-  // { value: 'TRENDING_DESC', label: 'Trending' },
+  { value: 'TRENDING_DESC', label: 'Trending' },
   { value: 'SCORE_DESC', label: 'Average Score' },
   { value: 'FAVOURITES_DESC', label: 'Favorites' },
   { value: '', label: 'Default' },

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { getUserAnimeEntries } from '../api/userAnime';
 import type { UserAnimeEntry } from '../types/UserAnimeEntryType.types';
 import { toastError } from '../lib/toast';
-import { getRecommendedAnime } from '../api/browse';
+import { getRecommendedAnime, getTrendingAnime } from '../api/browse';
 import type { AnimeType } from '../types/AnimeType.types';
 
 export const useBrowseData = () => {
@@ -15,14 +15,18 @@ export const useBrowseData = () => {
   const [loading, setLoading] = useState(true);
   const [animeEntryList, setAnimeEntryList] = useState<UserAnimeEntry[]>([]);
   const [recommended, setRecommended] = useState<AnimeType[]>([]);
+  const [trending, setTrending] = useState<AnimeType[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [userAnimeEntries, reccommendedAnime] = await Promise.all([
-          getUserAnimeEntries(),
-          getRecommendedAnime()
-        ])
-        console.log(userAnimeEntries);
+        const [userAnimeEntries, reccommendedAnime, trendingAnime] =
+          await Promise.all([
+            getUserAnimeEntries(),
+            getRecommendedAnime(30),
+            getTrendingAnime(40),
+          ]);
+        console.log(trendingAnime);
         // const [trending, topRated, movies, gems, userAnime] = await Promise.all([
         //     getTrendingAnime(),
         //     getTopRatedAnime(),
@@ -36,6 +40,7 @@ export const useBrowseData = () => {
         // setHiddenGems(gems || []);
         setAnimeEntryList(userAnimeEntries || []);
         setRecommended(reccommendedAnime);
+        setTrending(trendingAnime);
       } catch {
         toastError('Unable to get all browsing data.');
       } finally {
@@ -50,6 +55,7 @@ export const useBrowseData = () => {
     loading,
     animeEntryList,
     setAnimeEntryList,
-    recommended
+    recommended,
+    trending,
   };
 };

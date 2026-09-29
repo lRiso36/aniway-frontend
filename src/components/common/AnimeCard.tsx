@@ -167,7 +167,6 @@ export const AnimeCard = ({
             currentEntry={entry}
             onSave={(updated) => {
               setActiveModal(null);
-              console.log(updated);
               onEntryChange?.(updated, anime.anilistId);
             }}
           />
