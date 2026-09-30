@@ -12,7 +12,7 @@ export const LandingSocialPreview = () => {
         <div className="
             flex
             flex-col
-            md:flex-row
+            lg:flex-row
             gap-6
             justify-between
             ">
@@ -30,6 +30,8 @@ export const LandingSocialPreview = () => {
                 hover:bg-white/10
                 transition
                 flex
+                flex-col
+                sm:flex-row
                 gap-4
                 items-start
             "
@@ -99,7 +101,7 @@ export const LandingSocialPreview = () => {
             15 anime
           </p>
 
-          <div className="flex items-center gap-2 mt-4">
+          <div className="flex flex-wrap lg:flex-nowrap items-center gap-2 mt-4">
   {previewAnime.map((anime, index) => (
     <img
       key={index}
@@ -135,7 +137,9 @@ export const LandingSocialPreview = () => {
                 shadow-lg
                 hover:bg-white/10
                 transition
-                flex 
+                flex
+                flex-col
+                sm:flex-row
                 gap-4
                 "
                 >

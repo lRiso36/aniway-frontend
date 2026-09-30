@@ -24,29 +24,30 @@ export const LandingHero = ({ targetRef }: Props) => {
             }}
         >
             <div className="
-                absolute
-                inset-0
-                bg-black/50
+                absolute inset-0 bg-black/50 flex items-center lg:block
             ">
                 <div className="
                     relative
                     z-10
                     max-w-7xl
                     mx-auto
-                    px-8
+                    px-4
+                    sm:px-8
                     w-full
-                    pt-40
+                   py-24 lg:pt-40 lg:pb-0
                 ">
                     <div className="max-w-2xl">
                         <div>
                             <h2 className="
-                                text-6xl
+                                text-4xl
+                                sm:text-6xl
                                 md:text-7xl
                                 font-bold
                                 leading-tight
                             ">Track. Rate.</h2>
                             <h2 className="
-                                text-6xl
+                                text-4xl
+                                sm:text-6xl
                                 md:text-7xl
                                 font-bold
                                 leading-tight
@@ -91,7 +92,7 @@ export const LandingHero = ({ targetRef }: Props) => {
                             hover:bg-white/20
                             transition
                             "
-                            onClick={handleClick}
+                                onClick={handleClick}
                             >
                                 About</button>
                         </div>

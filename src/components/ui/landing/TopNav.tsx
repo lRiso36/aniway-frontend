@@ -16,8 +16,10 @@ export const TopNavbar =  () => {
         <div className="
             max-w-7xl
             mx-auto
-            px-8
-            py-6
+            px-4
+            sm:px-8
+            py-4
+            lg:py-6
             flex
             items-center
             justify-between
@@ -30,7 +32,7 @@ export const TopNavbar =  () => {
             ">
                 AniWay</h1>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
                 <button className="
                 font-medium
                 hover:scale-110 transition-transform
@@ -42,7 +44,8 @@ export const TopNavbar =  () => {
                 <button className="
                     bg-purple-700
                     hover:bg-purple-600
-                    px-5
+                    px-3
+                    sm:px-5
                     py-1
                     rounded-xl
                     font-medium

@@ -52,7 +52,7 @@ export const TrendingSection = () => {
         return null;
     }
     return (
-        <section className="pt-10 space-y-10 relative">
+        <section className="pt-10 space-y-6 lg:space-y-10 relative">
             <div>
                 <h2 className="
                     text-3xl
@@ -101,7 +101,8 @@ export const TrendingSection = () => {
                 onClick={scrollRight}
                 className="
             absolute
-            -right-6
+            right-0
+            lg:-right-6
             top-1/2
             z-20
             py-3

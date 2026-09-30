@@ -35,10 +35,10 @@ const landingFeatures = [
 
 export const LandingFeatures = () => {
     return (
-        <section className="space-y-10">
+        <section className="space-y-6 lg:space-y-10">
             <div>
                 <h2 className="
-                text-4xl
+                text-3xl
                 lg:text-4xl
                 font-bold
                 tracking-tight
@@ -49,7 +49,8 @@ export const LandingFeatures = () => {
             grid-cols-1
             md:grid-cols-2
             lg:grid-cols-3
-            gap-6
+            gap-4
+            lg:gap-6
             ">
                 {landingFeatures.map((feature) => (
                     <div key={feature.title} className="

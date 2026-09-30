@@ -11,7 +11,8 @@ export const AnimeRankCard = ({title, score, image}: AnimeRankCardType) => {
         // main container
         <div className="
             relative
-            w-40
+            w-36
+            sm:w-40
             md:w-52
             lg:w-60
             aspect-[2/3]
@@ -64,17 +65,16 @@ export const AnimeRankCard = ({title, score, image}: AnimeRankCardType) => {
                 left-0
                 w-full
                 z-10
-                p-2
+                p-1
                 md:p-3
                 bg-black/75
                 flex
                 flex-col
-                gap-1
                 md:gap-2
             ">
                 <h3 className="
                     font-semibold
-                    text-base
+                    text-sm
                     md:text-lg
                     lg:text-xl
                     truncate
@@ -84,12 +84,14 @@ export const AnimeRankCard = ({title, score, image}: AnimeRankCardType) => {
                 <p className="
                     text-zinc-300
                     font-medium
-                    text-base
+                    text-sm
+                    md:text-base
                     lg:text-xl
                     whitespace-nowrap
                 "><span className="
                     text-purple-400
-                    text-2xl
+                    text-lg
+                    sm:text-2xl
                 ">★</span> {score}</p>
             </div>
         </div>

@@ -5,14 +5,17 @@ export const JoinLanding = () => {
   return (
     <section
       className="
-        py-26
+        py-12
+        md:py-20
+        lg:py-26
       "
     >
       <div
         className="
           max-w-5xl
           mx-auto
-          px-8
+          px-0
+          lg:px-8
         "
       >
         <div
@@ -23,9 +26,11 @@ export const JoinLanding = () => {
             border
             border-white/10
             shadow-2xl
-            px-8
+            px-4
+            sm:px-8
             md:px-16
-            py-16
+            py-10
+            lg:py-16
             text-center
           "
         >
@@ -47,7 +52,8 @@ export const JoinLanding = () => {
           <div className="relative z-10">
             <h2
               className="
-                text-4xl
+                text-3xl
+                sm:text-4xl
                 md:text-6xl
                 font-bold
                 tracking-tight
@@ -85,7 +91,8 @@ export const JoinLanding = () => {
                 className="
                   bg-purple-600
                   hover:bg-purple-500
-                  px-8
+                  px-4
+                  sm:px-8
                   py-4
                   rounded-2xl
                   font-semibold
@@ -104,7 +111,8 @@ export const JoinLanding = () => {
                   border-white/20
                   bg-white/5
                   hover:bg-white/10
-                  px-8
+                  px-4
+                  sm:px-8
                   py-4
                   rounded-2xl
                   font-semibold
