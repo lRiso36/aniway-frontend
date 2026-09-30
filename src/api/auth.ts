@@ -29,3 +29,8 @@ export async function forgotPassword(email: string) {
 export async function resetPassword(token: string, newPassword: string) {
   await client.post('/auth/reset-password', { token, newPassword });
 }
+
+export async function getMe() {
+  const response = await client.get('users/me');
+  return response.data;
+}

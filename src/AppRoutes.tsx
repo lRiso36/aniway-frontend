@@ -4,6 +4,7 @@ import { Login } from './pages/auth/Login';
 import { Browse } from './pages/Browse';
 import { ForgotPassword } from './pages/auth/ForgotPassword';
 import { ResetPassword } from './pages/auth/ResetPassword';
+import { AppLayout } from './components/common/AppLayout';
 export function AppRoutes() {
   return (
     <Routes>
@@ -12,7 +13,10 @@ export function AppRoutes() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       {/* need to be proected */}
-      <Route path="/browse" element={<Browse />} />
+      <Route element={<AppLayout />}>
+        <Route path="/home" element={<div>Home</div>} />
+        <Route path="/browse" element={<Browse />} />
+      </Route>
     </Routes>
   );
 }
