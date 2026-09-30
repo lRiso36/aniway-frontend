@@ -15,10 +15,11 @@ export const TrendingSection = () => {
     useEffect(() => {
         async function getTrending() {
             try {
+                console.log('fetching trend')
                 const trendingAnime = await getTrendingAnime();
                 setTrending(trendingAnime);
             } catch (err) {
-                console.error("Could not get trending anime");
+                console.error(`Could not get trending anime: ${err}`);
             }
         }
         getTrending();
@@ -47,8 +48,11 @@ export const TrendingSection = () => {
         ...trending.slice(0, startIndex)
     ];
 
+    if (!(trending.length > 0)) {
+        return null;
+    }
     return (
-        <section className="space-y-10 relative">
+        <section className="pt-10 space-y-10 relative">
             <div>
                 <h2 className="
                     text-3xl

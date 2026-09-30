@@ -4,9 +4,11 @@ import { TrendingSection } from "../components/ui/landing/TrendingSection";
 import { LandingFeatures } from "../components/ui/landing/LandingFeatures";
 import { LandingSocialPreview } from "../components/ui/landing/LandingSocialPreview";
 import { JoinLanding } from "../components/ui/landing/JoinLanding";
+import { useRef } from "react";
 
 
 export const Landing = () => {
+    const targetRef = useRef<HTMLDivElement>(null);
     return (
 
         <main className="
@@ -21,10 +23,10 @@ export const Landing = () => {
             <TopNavbar />
 
             <section className="">
-                <LandingHero />
+                <LandingHero targetRef={targetRef} />
             </section>
 
-            <section className="pt-10">
+            <section className="pt-10" ref={targetRef}>
                 <div className="max-w-7xl mx-auto px-8">
                     <LandingSocialPreview />
                 </div>
@@ -36,9 +38,7 @@ export const Landing = () => {
                 </div>
             </section>
 
-
-
-            <section className="pt-18">
+            <section className="">
                 <div className="max-w-7xl mx-auto px-8">
                     <TrendingSection />
                 </div>

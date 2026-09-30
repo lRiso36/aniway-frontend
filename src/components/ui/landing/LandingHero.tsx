@@ -1,8 +1,15 @@
-import {useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import heroImage from '../../../assets/AniWayHeroImage.png'
 
-export const LandingHero = () => {
+type Props = { targetRef: React.RefObject<HTMLDivElement | null> };
+
+export const LandingHero = ({ targetRef }: Props) => {
     const navigate = useNavigate();
+
+    const handleClick = () => {
+        targetRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     return (
         <section className="
         min-h-screen
@@ -12,9 +19,9 @@ export const LandingHero = () => {
         flex
         items-center
         "
-        style={{
-            backgroundImage: `url(${heroImage})`,
-        }}
+            style={{
+                backgroundImage: `url(${heroImage})`,
+            }}
         >
             <div className="
                 absolute
@@ -68,7 +75,7 @@ export const LandingHero = () => {
                                 font-medium
                                 transition
                             "
-                            onClick={()=>navigate("/signup")}
+                                onClick={() => navigate("/signup")}
                             >
                                 Get Started Free</button>
 
@@ -83,7 +90,9 @@ export const LandingHero = () => {
                             font-medium
                             hover:bg-white/20
                             transition
-                            ">
+                            "
+                            onClick={handleClick}
+                            >
                                 About</button>
                         </div>
                     </div>
