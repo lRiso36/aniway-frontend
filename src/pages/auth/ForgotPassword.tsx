@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { AuthNav } from '../../components/common/AuthNav';
-import { AuthContainer } from '../../components/common/AuthContainer';
+import { AuthNav } from '../../components/common/AuthPages/AuthNav';
+import { AuthContainer } from '../../components/common/AuthPages/AuthContainer';
 import { AuthLayout } from '../../components/layout/AuthLayout';
 import { MailCheck } from 'lucide-react';
 import { FormInput } from '../../components/ui/FormInput';

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { AuthContainer } from '../../components/common/AuthContainer';
+import { AuthContainer } from '../../components/common/AuthPages/AuthContainer';
 import type { SignUpFormData } from '../../types/SignUpFormData.types';
-import { SignUpForm } from '../../components/common/SignUpForm';
+import { SignUpForm } from '../../components/common/AuthPages/SignUpForm';
 import { AuthLayout } from '../../components/layout/AuthLayout';
-import { AuthNav } from '../../components/common/AuthNav';
+import { AuthNav } from '../../components/common/AuthPages/AuthNav';
 import { MailOpen } from 'lucide-react';
 
 const initialFormData: SignUpFormData = {

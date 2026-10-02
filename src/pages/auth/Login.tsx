@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { AuthNav } from '../../components/common/AuthNav';
+import { AuthNav } from '../../components/common/AuthPages/AuthNav';
 import { AuthLayout } from '../../components/layout/AuthLayout';
-import { AuthContainer } from '../../components/common/AuthContainer';
+import { AuthContainer } from '../../components/common/AuthPages/AuthContainer';
 import { FormInput } from '../../components/ui/FormInput';
 import { AuthButtons } from '../../components/ui/AuthButtons';
 import { getMe, login } from '../../api/auth';

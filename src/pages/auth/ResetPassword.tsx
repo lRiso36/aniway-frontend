@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthLayout } from '../../components/layout/AuthLayout';
-import { AuthNav } from '../../components/common/AuthNav';
-import { AuthContainer } from '../../components/common/AuthContainer';
+import { AuthNav } from '../../components/common/AuthPages/AuthNav';
+import { AuthContainer } from '../../components/common/AuthPages/AuthContainer';
 import { FormInput } from '../../components/ui/FormInput';
 import { AuthButtons } from '../../components/ui/AuthButtons';
 import { resetPassword } from '../../api/auth';

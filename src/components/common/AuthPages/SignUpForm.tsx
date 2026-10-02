@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { FormInput } from '../ui/FormInput';
-import type { SignUpFormData } from '../../types/SignUpFormData.types';
-import { useSignUpValidation } from '../../hooks/useSignUpValidation';
-import { AuthButtons } from '../ui/AuthButtons';
-import { registerUser } from '../../api/auth';
-import { toastError } from '../../lib/toast';
+import { FormInput } from '../../ui/FormInput';
+import type { SignUpFormData } from '../../../types/SignUpFormData.types';
+import { useSignUpValidation } from '../../../hooks/useSignUpValidation';
+import { AuthButtons } from '../../ui/AuthButtons';
+import { registerUser } from '../../../api/auth';
+import { toastError } from '../../../lib/toast';
 import axios from 'axios';
+import { PrivacyModal } from './PrivacyModal';
 
 type SignUpStepOneTypes = {
   formData: SignUpFormData;
@@ -23,6 +24,7 @@ export const SignUpForm = ({
   onSuccess,
 }: SignUpStepOneTypes) => {
   const [loading, setLoading] = useState(false);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
   const {
     usernameError,
     emailError,
@@ -132,11 +134,22 @@ export const SignUpForm = ({
           className="text-xs sm:text-sm text-zinc-500 leading-relaxed"
         >
           I agree to the
-          <span className="text-purple-400 cursor-pointer hover:underline ml-1">
+          <span className="text-purple-400 cursor-pointer hover:underline mx-1">
             Terms of Service
+          </span>
+          and
+          <span
+            className="text-purple-400 cursor-pointer hover:underline ml-1"
+            onClick={() => {
+              setPrivacyOpen(true);
+            }}
+          >
+            Privacy Policy
           </span>
         </label>
       </div>
+
+      {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
 
       <AuthButtons
         onClick={() => handleSubmit()}
