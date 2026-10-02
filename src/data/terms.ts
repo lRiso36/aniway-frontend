@@ -1,10 +1,8 @@
 // src/lib/termsOfServiceContent.ts
 import type { ContentItem } from './privacyPolicy';
 
+export const termsUpdatedAt: string = 'Last updated October 02, 2026';
 export const termsOfServiceContent: ContentItem[] = [
-  { type: 'title', text: 'Terms of Service' },
-  { type: 'subtitle', text: 'Last updated October 02, 2026' },
-
   // Agreement
   { type: 'title', text: 'Agreement to our legal terms' },
   {

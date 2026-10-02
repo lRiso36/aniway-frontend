@@ -5,9 +5,8 @@ export type ContentItem = {
   items?: string[];
 };
 
+export const policyUpdatedAt: string = 'Last updated October 02, 2026';
 export const privacyPolicyContent: ContentItem[] = [
-  { type: 'title', text: 'Privacy Policy' },
-  { type: 'subtitle', text: 'Last updated October 02, 2026' },
   {
     type: 'paragraph',
     text: 'This Privacy Notice for Aniway ("we," "us," or "our") describes how and why we might access, collect, store, use, and/or share ("process") your personal information when you use our services ("Services"), including when you visit our website or engage with us in other related ways.',

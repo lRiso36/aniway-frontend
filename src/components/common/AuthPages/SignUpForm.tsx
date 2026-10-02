@@ -7,6 +7,7 @@ import { registerUser } from '../../../api/auth';
 import { toastError } from '../../../lib/toast';
 import axios from 'axios';
 import { PrivacyModal } from './PrivacyModal';
+import { TermsModal } from './TermsModal';
 
 type SignUpStepOneTypes = {
   formData: SignUpFormData;
@@ -25,6 +26,8 @@ export const SignUpForm = ({
 }: SignUpStepOneTypes) => {
   const [loading, setLoading] = useState(false);
   const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [tosOpen, setTosOpen] = useState(false);
+
   const {
     usernameError,
     emailError,
@@ -134,7 +137,10 @@ export const SignUpForm = ({
           className="text-xs sm:text-sm text-zinc-500 leading-relaxed"
         >
           I agree to the
-          <span className="text-purple-400 cursor-pointer hover:underline mx-1">
+          <span
+            className="text-purple-400 cursor-pointer hover:underline mx-1"
+            onClick={() => setTosOpen(true)}
+          >
             Terms of Service
           </span>
           and
@@ -150,6 +156,7 @@ export const SignUpForm = ({
       </div>
 
       {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
+      {tosOpen && <TermsModal onClose={() => setTosOpen(false)} />}
 
       <AuthButtons
         onClick={() => handleSubmit()}
