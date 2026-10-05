@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export const JoinLanding = () => {
   const navigate = useNavigate();
@@ -73,8 +73,8 @@ export const JoinLanding = () => {
                 leading-relaxed
               "
             >
-              Track what you watch, build custom lists, share reviews,
-              and discover anime through fans just like you.
+              Track what you watch, build custom lists, share reviews, and
+              discover anime through fans just like you.
             </p>
 
             <div
@@ -100,7 +100,7 @@ export const JoinLanding = () => {
                   transition
                   shadow-lg
                 "
-                onClick={()=>navigate("/signup")}
+                onClick={() => navigate('/signup')}
               >
                 Get Started Free
               </button>
@@ -119,7 +119,7 @@ export const JoinLanding = () => {
                   text-lg
                   transition
                 "
-                onClick={()=>navigate("/login")}
+                onClick={() => navigate('/login')}
               >
                 Login
               </button>

@@ -4,37 +4,37 @@
 // import { checkEmailAvailable, updateEmail } from "../../services/authServices";
 // import { toastError } from "../../lib/toast";
 
-import { useNavigate } from "react-router-dom";
-import { deleteAccount } from "../api/user";
-import { toastError } from "../lib/toast";
+import { useNavigate } from 'react-router-dom';
+import { deleteAccount } from '../api/user';
+import { toastError } from '../lib/toast';
 
 export const useSettings = () => {
-    //     const { logout, user } = useAuth();
-    const navigate = useNavigate();
+  //     const { logout, user } = useAuth();
+  const navigate = useNavigate();
 
-    //     const handleLogout = async () => {
-    //         try {
-    //             await logout();
-    //             navigate('/');
-    //         } catch {
-    //             toastError("Failed to log out, please try again");
-    //         }
-    //     };
-    const handleDeleteAccount = async () => {
-        try {
-            await deleteAccount();
-            navigate('/')
-        } catch {
-            toastError("Failed to delete account, please try again")
-        }
+  //     const handleLogout = async () => {
+  //         try {
+  //             await logout();
+  //             navigate('/');
+  //         } catch {
+  //             toastError("Failed to log out, please try again");
+  //         }
+  //     };
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount();
+      navigate('/');
+    } catch {
+      toastError('Failed to delete account, please try again');
     }
+  };
 
-    //     const handleEmailChange = async (email: string) => {
-    //         const isAvailable = await checkEmailAvailable(email);
-    //         if (!isAvailable) throw new Error('That email is already in use');
-    //         await updateEmail(user!.id, email);
-    //     };
+  //     const handleEmailChange = async (email: string) => {
+  //         const isAvailable = await checkEmailAvailable(email);
+  //         if (!isAvailable) throw new Error('That email is already in use');
+  //         await updateEmail(user!.id, email);
+  //     };
 
-    //     return { user, handleLogout, handleEmailChange };
-    return { handleDeleteAccount };
+  //     return { user, handleLogout, handleEmailChange };
+  return { handleDeleteAccount };
 };

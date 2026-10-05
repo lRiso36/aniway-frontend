@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
 
-export const TopNavbar =  () => {
-    const navigate = useNavigate();
+export const TopNavbar = () => {
+  const navigate = useNavigate();
 
-    return (
-    <nav className="
+  return (
+    <nav
+      className="
         absolute
         top-0
         left-0
@@ -13,7 +14,8 @@ export const TopNavbar =  () => {
         bg-black/50
     "
     >
-        <div className="
+      <div
+        className="
             max-w-7xl
             mx-auto
             px-4
@@ -23,25 +25,31 @@ export const TopNavbar =  () => {
             flex
             items-center
             justify-between
-        ">
-            <h1
-            className="
+        "
+      >
+        <h1
+          className="
                 text-2xl
                 font-bold
                 tracking-wide
-            ">
-                AniWay</h1>
+            "
+        >
+          AniWay
+        </h1>
 
-            <div className="flex items-center gap-2 sm:gap-4">
-                <button className="
+        <div className="flex items-center gap-2 sm:gap-4">
+          <button
+            className="
                 font-medium
                 hover:scale-110 transition-transform
                 "
-                onClick={()=>navigate("/login")}
-                >
-                    Login</button>
+            onClick={() => navigate('/login')}
+          >
+            Login
+          </button>
 
-                <button className="
+          <button
+            className="
                     bg-purple-700
                     hover:bg-purple-600
                     px-3
@@ -51,11 +59,12 @@ export const TopNavbar =  () => {
                     font-medium
                     transition
                 "
-                onClick={()=>navigate("/signup")}
-                >
-                    SignUp</button>
-            </div>
+            onClick={() => navigate('/signup')}
+          >
+            SignUp
+          </button>
         </div>
+      </div>
     </nav>
-    )
-}
+  );
+};

@@ -10,7 +10,7 @@ import { Landing } from './pages/Landing';
 export function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Landing/>} />
+      <Route path="/" element={<Landing />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -19,7 +19,7 @@ export function AppRoutes() {
       <Route element={<AppLayout />}>
         <Route path="/home" element={<div>Home</div>} />
         <Route path="/browse" element={<Browse />} />
-        <Route path='/settings' element={<Settings/>} />
+        <Route path="/settings" element={<Settings />} />
       </Route>
     </Routes>
   );

@@ -1,15 +1,15 @@
-
 type AnimeRankCardType = {
-    id: number;
-    title: string;
-    score?: number;
-    image: string;
+  id: number;
+  title: string;
+  score?: number;
+  image: string;
 };
 
-export const AnimeRankCard = ({title, score, image}: AnimeRankCardType) => {
-    return (
-        // main container
-        <div className="
+export const AnimeRankCard = ({ title, score, image }: AnimeRankCardType) => {
+  return (
+    // main container
+    <div
+      className="
             relative
             w-36
             sm:w-40
@@ -22,12 +22,13 @@ export const AnimeRankCard = ({title, score, image}: AnimeRankCardType) => {
             cursor-pointer
             group
             border border-white/10
-        ">
-            {/* image */}
-            <img 
-                src={image} 
-                alt={title} 
-                className="
+        "
+    >
+      {/* image */}
+      <img
+        src={image}
+        alt={title}
+        className="
                 w-full
                 h-full
                 object-cover
@@ -35,9 +36,9 @@ export const AnimeRankCard = ({title, score, image}: AnimeRankCardType) => {
                 transition 
                 duration-300
                 "
-            />
-                {/* rank badge */}
-               {/* <div className="
+      />
+      {/* rank badge */}
+      {/* <div className="
                 absolute
                 top-2
                 md:top-4
@@ -58,8 +59,9 @@ export const AnimeRankCard = ({title, score, image}: AnimeRankCardType) => {
                 lg:text-base
             ">{rank}</div> */}
 
-            {/* backgorund bottom */}
-            <div className="
+      {/* backgorund bottom */}
+      <div
+        className="
                 absolute
                 bottom-0
                 left-0
@@ -71,29 +73,41 @@ export const AnimeRankCard = ({title, score, image}: AnimeRankCardType) => {
                 flex
                 flex-col
                 md:gap-2
-            ">
-                <h3 className="
+            "
+      >
+        <h3
+          className="
                     font-semibold
                     text-sm
                     md:text-lg
                     lg:text-xl
                     truncate
-                ">
-                {title}
-                </h3>
-                <p className="
+                "
+        >
+          {title}
+        </h3>
+        <p
+          className="
                     text-zinc-300
                     font-medium
                     text-sm
                     md:text-base
                     lg:text-xl
                     whitespace-nowrap
-                "><span className="
+                "
+        >
+          <span
+            className="
                     text-purple-400
                     text-lg
                     sm:text-2xl
-                ">★</span> {score}</p>
-            </div>
-        </div>
-    );
+                "
+          >
+            ★
+          </span>{' '}
+          {score}
+        </p>
+      </div>
+    </div>
+  );
 };

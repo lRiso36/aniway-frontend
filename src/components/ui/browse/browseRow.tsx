@@ -86,7 +86,10 @@ export const BrowseRow = ({
         {loading ? (
           <div className="flex gap-2 sm:gap-4 overflow-hidden px-4 items-start">
             {Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className="w-[100px] sm:w-[120px] lg:w-[140px] shrink-0">
+              <div
+                key={i}
+                className="w-[100px] sm:w-[120px] lg:w-[140px] shrink-0"
+              >
                 <AnimeCardSkeleton />
               </div>
             ))}

@@ -1,7 +1,7 @@
 /* components/ui/DatePicker.css */
 .rdp-dark {
-  --rdp-accent-color: #a855f7;            /* purple-500*/
-  --rdp-accent-background-color: #2a2a3e; 
+  --rdp-accent-color: #a855f7; /* purple-500*/
+  --rdp-accent-background-color: #2a2a3e;
   color: #e4e4e7;
   font-size: 0.8rem;
 }

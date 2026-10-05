@@ -38,7 +38,7 @@ export const useAnimeFilter = (
     filterValues.airingStatus !== '';
 
   const isSearching = query.trim() !== '' || hasActiveFilters;
-  const showBrowse = !query.trim() && !hasActiveFilters
+  const showBrowse = !query.trim() && !hasActiveFilters;
 
   const loadNextPage = () => {
     if (!hasNextPage || searchLoading) return;
@@ -95,6 +95,6 @@ export const useAnimeFilter = (
     loadNextPage,
     loadingMore,
     isSearching,
-    showBrowse
+    showBrowse,
   };
 };

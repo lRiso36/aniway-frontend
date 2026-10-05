@@ -1,17 +1,18 @@
-import { useNavigate } from "react-router-dom"
-import heroImage from '../../../assets/AniWayHeroImage.png'
+import { useNavigate } from 'react-router-dom';
+import heroImage from '../../../assets/AniWayHeroImage.png';
 
 type Props = { targetRef: React.RefObject<HTMLDivElement | null> };
 
 export const LandingHero = ({ targetRef }: Props) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleClick = () => {
-        targetRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
+  const handleClick = () => {
+    targetRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-    return (
-        <section className="
+  return (
+    <section
+      className="
         min-h-screen
         relative
         bg-cover
@@ -19,14 +20,17 @@ export const LandingHero = ({ targetRef }: Props) => {
         flex
         items-center
         "
-            style={{
-                backgroundImage: `url(${heroImage})`,
-            }}
-        >
-            <div className="
+      style={{
+        backgroundImage: `url(${heroImage})`,
+      }}
+    >
+      <div
+        className="
                 absolute inset-0 bg-black/50 flex items-center lg:block
-            ">
-                <div className="
+            "
+      >
+        <div
+          className="
                     relative
                     z-10
                     max-w-7xl
@@ -35,39 +39,50 @@ export const LandingHero = ({ targetRef }: Props) => {
                     sm:px-8
                     w-full
                    py-24 lg:pt-40 lg:pb-0
-                ">
-                    <div className="max-w-2xl">
-                        <div>
-                            <h2 className="
+                "
+        >
+          <div className="max-w-2xl">
+            <div>
+              <h2
+                className="
                                 text-4xl
                                 sm:text-6xl
                                 md:text-7xl
                                 font-bold
                                 leading-tight
-                            ">Track. Rate.</h2>
-                            <h2 className="
+                            "
+              >
+                Track. Rate.
+              </h2>
+              <h2
+                className="
                                 text-4xl
                                 sm:text-6xl
                                 md:text-7xl
                                 font-bold
                                 leading-tight
-                            ">Share Anime.</h2>
-                        </div>
-                        <div className="mt-6">
-                            <p className="
+                            "
+              >
+                Share Anime.
+              </h2>
+            </div>
+            <div className="mt-6">
+              <p
+                className="
                                 text-lg
                                 md:text-xl
                                 text-gray-200
                                 leading-relaxed
                                 max-w-xl
-                            ">
-                                Build your anime world. Track what you've watched,
-                                create lists, follow other fans, and never
-                                miss a release.
-                            </p>
-                        </div>
-                        <div className="mt-8 flex gap-4">
-                            <button className="
+                            "
+              >
+                Build your anime world. Track what you've watched, create lists,
+                follow other fans, and never miss a release.
+              </p>
+            </div>
+            <div className="mt-8 flex gap-4">
+              <button
+                className="
                                 bg-purple-700
                                 hover:bg-purple-600
                                 px-6
@@ -76,11 +91,13 @@ export const LandingHero = ({ targetRef }: Props) => {
                                 font-medium
                                 transition
                             "
-                                onClick={() => navigate("/signup")}
-                            >
-                                Get Started Free</button>
+                onClick={() => navigate('/signup')}
+              >
+                Get Started Free
+              </button>
 
-                            <button className="
+              <button
+                className="
                             border
                             border-white/50
                             bg-white/10
@@ -92,13 +109,14 @@ export const LandingHero = ({ targetRef }: Props) => {
                             hover:bg-white/20
                             transition
                             "
-                                onClick={handleClick}
-                            >
-                                About</button>
-                        </div>
-                    </div>
-                </div>
+                onClick={handleClick}
+              >
+                About
+              </button>
             </div>
-        </section>
-    )
-}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
