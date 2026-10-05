@@ -26,7 +26,6 @@ export const useBrowseData = () => {
             getRecommendedAnime(30),
             getTrendingAnime(40),
           ]);
-        console.log(trendingAnime);
         // const [trending, topRated, movies, gems, userAnime] = await Promise.all([
         //     getTrendingAnime(),
         //     getTopRatedAnime(),

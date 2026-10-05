@@ -15,7 +15,6 @@ export const TrendingSection = () => {
     useEffect(() => {
         async function getTrending() {
             try {
-                console.log('fetching trend')
                 const trendingAnime = await getTrendingAnime();
                 setTrending(trendingAnime);
             } catch (err) {

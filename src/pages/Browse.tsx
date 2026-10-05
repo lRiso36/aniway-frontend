@@ -33,7 +33,7 @@ export const Browse = () => {
   //     trendingAnime, topRatedAnime, trendingMovies, hiddenGems,
   //     loading, animeEntryList, setAnimeEntryList
   // } = useBrowseData();
-  const { animeEntryList, setAnimeEntryList, recommended, trending } =
+  const { animeEntryList, setAnimeEntryList, recommended, trending, loading } =
     useBrowseData();
 
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -320,19 +320,21 @@ export const Browse = () => {
           ))}
         {showBrowse && (
           <>
-            {recommended?.length > 0 && (
+            {(loading || recommended?.length > 0) && (
               <BrowseRow
                 title="Recommended"
                 items={recommended}
                 entries={animeEntryList}
+                loading={loading}
                 onEntryChange={updateEntry}
               />
             )}
-            {trending?.length > 0 && (
+            {(loading || trending?.length > 0) && (
               <BrowseRow
                 title="Trending"
                 items={trending}
                 entries={animeEntryList}
+                loading={loading}
                 onEntryChange={updateEntry}
               />
             )}

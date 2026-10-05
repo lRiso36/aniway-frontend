@@ -2,11 +2,13 @@ import { useRef, useEffect } from 'react';
 import type { AnimeType } from '../../../types/AnimeType.types';
 import { AnimeCard } from '../../common/AnimeCard';
 import type { UserAnimeEntry } from '../../../types/UserAnimeEntryType.types';
+import { AnimeCardSkeleton } from '../AnimeCardSkeleton';
 
 type BrowseRowType = {
   title: string;
   items: AnimeType[];
   entries?: UserAnimeEntry[];
+  loading?: boolean;
   onEntryChange: (updated: UserAnimeEntry | null, anilistId: number) => void;
 };
 
@@ -14,6 +16,7 @@ export const BrowseRow = ({
   title,
   items,
   entries,
+  loading = false,
   onEntryChange,
 }: BrowseRowType) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -28,14 +31,15 @@ export const BrowseRow = ({
 
   // on mount, scroll to the middle copy
   useEffect(() => {
+    if (loading) return;
     const el = scrollRef.current;
     if (!el) return;
-    const third = el.scrollWidth / 3;
-    el.scrollLeft = third;
-  }, []);
+    el.scrollLeft = el.scrollWidth / 3;
+  }, [loading]);
 
   // when near edges, silently jump to middle copy
   useEffect(() => {
+    if (loading) return;
     const el = scrollRef.current;
     if (!el) return;
 
@@ -50,7 +54,7 @@ export const BrowseRow = ({
 
     el.addEventListener('scroll', handleScroll);
     return () => el.removeEventListener('scroll', handleScroll);
-  }, [items]);
+  }, [items, loading]);
 
   return (
     <div className="flex flex-col gap-3">
@@ -79,25 +83,34 @@ export const BrowseRow = ({
         </div>
 
         {/* scrollable row */}
-        <div
-          ref={scrollRef}
-          className="flex gap-2 sm:gap-4 overflow-x-auto scrollbar-none px-4 items-start"
-        >
-          {tripled.map((anime, index) => (
-            <div
-              key={`${anime.anilistId}-${index}`}
-              className="
+        {loading ? (
+          <div className="flex gap-2 sm:gap-4 overflow-hidden px-4 items-start">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div key={i} className="w-[100px] sm:w-[120px] lg:w-[140px] shrink-0">
+                <AnimeCardSkeleton />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            ref={scrollRef}
+            className="flex gap-2 sm:gap-4 overflow-x-auto scrollbar-none px-4 items-start"
+          >
+            {tripled.map((anime, index) => (
+              <div
+                key={`${anime.anilistId}-${index}`}
+                className="
                         w-[100px] sm:w-[120px] lg:w-[140px] shrink-0"
-            >
-              <AnimeCard
-                anime={anime}
-                entry={entries?.find((e) => e.anilistId === anime.anilistId)}
-                onEntryChange={onEntryChange}
-              />
-            </div>
-          ))}
-        </div>
-
+              >
+                <AnimeCard
+                  anime={anime}
+                  entry={entries?.find((e) => e.anilistId === anime.anilistId)}
+                  onEntryChange={onEntryChange}
+                />
+              </div>
+            ))}
+          </div>
+        )}
         {/* right edge */}
         <div className="absolute right-0 top-0 h-full w-10 sm:w-14 bg-gradient-to-l from-[#0a0a14] to-transparent z-10 flex items-center justify-end">
           <button

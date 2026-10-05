@@ -139,14 +139,19 @@ export const SignUpForm = ({
           I agree to the
           <span
             className="text-purple-400 cursor-pointer hover:underline mx-1"
-            onClick={() => setTosOpen(true)}
+            onClick={(e) => {
+              e.preventDefault()
+              setTosOpen(true)
+            }
+            }
           >
             Terms of Service
           </span>
           and
           <span
             className="text-purple-400 cursor-pointer hover:underline ml-1"
-            onClick={() => {
+            onClick={(e) => {
+               e.preventDefault()
               setPrivacyOpen(true);
             }}
           >
