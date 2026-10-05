@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 // import toast from "react-hot-toast";
 import { useAnimeCard } from '../../hooks/useAnimeCard';
 import { AnimeCardMenu } from './AnimeCardMenu';
-import { Heart, Tv, Star, ListPlus } from 'lucide-react';
+import { Heart, Tv, Star, ListPlus, Plus } from 'lucide-react';
 import { LogModal } from './AnimeCarMenu/LogModal';
 import type { UserAnimeEntry } from '../../types/UserAnimeEntryType.types';
 import { useToggleFavorite } from '../../hooks/useToggleFavorite';
@@ -152,47 +152,61 @@ export const AnimeCard = ({
           {anime.titleEnglish ?? anime.titleRomaji}
         </p>
         {/* <p className="ml-1 text-white/50 text-xs">
-                    {entry
-                        ? `Ep ${entry.currentEpisode}${anime.episodes ? ` / ${anime.episodes}` : ""}`
-                        : `${anime.episodes ?? "—"} eps`}
-                </p> */}
+          {entry
+            ? `Ep ${entry.currentEpisode}${anime.episodeCount ? ` / ${anime.episodeCount}` : ""}`
+            : `${anime.episodeCount ?? "—"} eps`}
+        </p> */}
       </div>
 
-      {!readOnly && activeModal === 'log' && (
-        <>
-          <LogModal
-            isOpen={activeModal === 'log'}
-            onClose={() => setActiveModal(null)}
-            anime={anime}
-            currentEntry={entry}
-            onSave={(updated) => {
-              setActiveModal(null);
-              onEntryChange?.(updated, anime.anilistId);
-            }}
+      {entry?.status === "watching" && anime.episodeCount && (
+        <div className="flex items-center -mt-1.5 mb-1 gap-2">
+          <p className="ml-1 text-white/50 text-xs">
+            {`Ep ${entry.currentEpisode ?? 0} / ${anime.episodeCount}`}
+          </p>
+          <Plus size={14} 
+          strokeWidth={2}
+          className="relative top-[1px] text-white cursor-pointer transition hover:text-purple-500 hover:scale-125" 
+          // onClick={}
           />
+        </div>
+      )}
+      {!readOnly && (
+        <>
+          {activeModal === "log" && (
+            <LogModal
+              isOpen={activeModal === 'log'}
+              onClose={() => setActiveModal(null)}
+              anime={anime}
+              currentEntry={entry}
+              onSave={(updated) => {
+                setActiveModal(null);
+                onEntryChange?.(updated, anime.anilistId);
+              }}
+            />
+          )}
         </>
       )}
     </div>
 
-    //       <div>
-    //         <p className="-mt-1 ml-1 text-white text-xs lg:text-base font-medium line-clamp-1">
-    //           {anime.title.english ?? anime.title.romaji}
-    //         </p>
-    //         <p className="ml-1 text-white/50 text-xs">
-    //           {entry
-    //             ? `Ep ${entry.currentEpisode}${anime.episodes ? ` / ${anime.episodes}` : ""}`
-    //             : `${anime.episodes ?? "—"} eps`}
-    //         </p>
-    //       </div>
+    // <div>
+    //   <p className="-mt-1 ml-1 text-white text-xs lg:text-base font-medium line-clamp-1">
+    //     {anime.title.english ?? anime.title.romaji}
+    //   </p>
+    //   <p className="ml-1 text-white/50 text-xs">
+    //     {entry
+    //       ? `Ep ${entry.currentEpisode}${anime.episodes ? ` / ${anime.episodes}` : ""}`
+    //       : `${anime.episodes ?? "—"} eps`}
+    //   </p>
+    // </div>
 
-    //       {entry?.status === "watching" && anime.episodes && (
-    //         <div className="w-full h-1 bg-white/10 rounded-full">
-    //           <div
-    //             className="h-1 bg-purple-500 rounded-full"
-    //             style={{ width: `${Math.round((entry.currentEpisode / anime.episodes) * 100)}%` }}
-    //           />
-    //         </div>
-    //       )}
+    // {entry?.status === "watching" && anime.episodes && (
+    //   <div className="w-full h-1 bg-white/10 rounded-full">
+    //     <div
+    //       className="h-1 bg-purple-500 rounded-full"
+    //       style={{ width: `${Math.round((entry.currentEpisode / anime.episodes) * 100)}%` }}
+    //     />
+    //   </div>
+    // )}
 
     //         {!readOnly && (
     //           <>

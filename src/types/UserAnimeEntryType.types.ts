@@ -1,3 +1,5 @@
+import type { AnimeType } from "./AnimeType.types";
+
 export type UserAnimeStatus =
   'watching' | 'rewatching' | 'completed' | 'planning' | 'paused' | 'dropped';
 
@@ -17,3 +19,8 @@ export type UserAnimeEntry = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type UserAnimeEntryWithAnime = UserAnimeEntry & {
+  animeData: AnimeType;
+};
+export type AnimeEntryItem = { entry: UserAnimeEntry; anime: AnimeType };

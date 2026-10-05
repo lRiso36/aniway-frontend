@@ -1,53 +1,54 @@
 // src/hooks/anime/useMyAnime.ts
 import { useState, useEffect } from "react";
-// import { getUserAnime } from "../../services/userAnimeService";
-import type { UserAnimeEntry } from "../types/UserAnimeEntryType.types";
-import type { AnimeType } from "../types/AnimeType.types";
+import { getUserAnimeEntries } from "../api/userAnime";
+import type { AnimeEntryItem, UserAnimeEntry, UserAnimeEntryWithAnime } from "../types/UserAnimeEntryType.types";
 import { toastError } from "../lib/toast";
+
 export const useMyAnime = () => {
-    const [animeList, setAnimeList] = useState<{ entry: UserAnimeEntry, anime: AnimeType }[]>([]);
+    const [animeEntryList, setAnimeEntryList] = useState<AnimeEntryItem[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // const fetchAnimeData = async () => {
-    //     setLoading(true);
-    //     try {
-    //         const data = await getUserAnime();
-    //         setAnimeList(data);
-    //     } catch {
-    //         toastError("Failed to get user anime");
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
+    const fetchAnimeData = async () => {
+        setLoading(true);
+        try {
+            const data = (await getUserAnimeEntries(true)) as UserAnimeEntryWithAnime[];
+            setAnimeEntryList(data.map(({ animeData, ...entry }) => ({ entry, anime: animeData })));
+        } catch {
+            toastError("Failed to get user anime");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleEntryChange = (updated: UserAnimeEntry | null, anilistId: number) => {
-        setAnimeList(prev => {
+        setAnimeEntryList(prev => {
             if (updated === null) {
                 return prev.filter(item => item.entry.anilistId !== anilistId);
             }
             return prev
-            .map(item =>
-                item.entry.anilistId === anilistId
-                    ? { ...item, entry: { ...updated, updatedAt: new Date().toISOString() } }
-                    : item
-            )
-            .sort((a, b) => {
-                const aDate = a.entry.updatedAt ?? '';
-                const bDate = b.entry.updatedAt ?? '';
-                return bDate.localeCompare(aDate);
-            });
+                .map(item =>
+                    item.entry.anilistId === anilistId
+                        ? { ...item, entry: { ...updated, updatedAt: new Date().toISOString() } }
+                        : item
+                )
+                .sort((a, b) => {
+                    const aDate = a.entry.updatedAt ?? '';
+                    const bDate = b.entry.updatedAt ?? '';
+                    return bDate.localeCompare(aDate);
+                });
         });
     };
 
-    // useEffect(() => {
-    //     fetchAnimeData();
-    // }, []);
+    useEffect(() => {
+        fetchAnimeData();
+    }, []);
 
-    const watching = animeList.filter(item => item.entry.status === 'watching').map(item => item.anime);
-    const completed = animeList.filter(item => item.entry.status === 'completed').map(item => item.anime);
-    // const planToWatch = animeList.filter(item => item.entry.status === 'plan-to-watch').map(item => item.anime);
-    const favorites = animeList.filter(item => item.entry.isFavorite).map(item => item.anime);
-    const entries = animeList.map(item => item.entry);
+    const watching = animeEntryList.filter(item => item.entry.status === 'watching').map(item => item.anime);
+    const completed = animeEntryList.filter(item => item.entry.status === 'completed').map(item => item.anime);
+    const planToWatch = animeEntryList.filter(item => item.entry.status === 'planning').map(item => item.anime);
+    const favorites = animeEntryList.filter(item => item.entry.isFavorite).map(item => item.anime);
+    const dropped = animeEntryList.filter(item => item.entry.status === 'dropped').map(item => item.anime);
+    const entries = animeEntryList.map(item => item.entry);
 
-    // return { loading, watching, completed, planToWatch, favorites, entries, handleEntryChange };
+    return { loading, watching, completed, planToWatch, favorites, dropped, entries, handleEntryChange };
 };

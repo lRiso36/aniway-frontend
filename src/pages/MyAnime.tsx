@@ -1,19 +1,21 @@
-// import { MyAnimeNavBar } from "../components/MyAnimeNavBar"
+
 // import { MyAnimeConatiner } from "../components/MyAnimeContainer"
 import { useSearchParams } from "react-router-dom"
 import { MyAnimeNavBar } from "../components/common/MyAnime/MyAnimeNav";
+import { MyAnimeContainer } from "../components/common/MyAnime/MyAnimeContainer";
 // import { Loading } from "../components/Loading"
-// import { useMyAnime } from "../hooks/anime/useMyAnime"
+import { useMyAnime } from "../hooks/useMyAnime";
 
 export const MyAnime = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const tab = searchParams.get("tab") || "overview";
-    // const {
-    //     loading,
-    //     watching, completed,
-    //     planToWatch, favorites,
-    //     entries, handleEntryChange
-    // } = useMyAnime()
+    const {
+        loading,
+        watching, completed,
+        planToWatch, favorites,
+        entries, dropped,
+        handleEntryChange
+    } = useMyAnime()
 
     // if (loading) return (
     //     <Loading loading={loading} />
@@ -38,7 +40,7 @@ export const MyAnime = () => {
                 <div>
                     {tab === "overview" && (
                         <div className="-mt-3">
-                            {/* <MyAnimeConatiner
+                            <MyAnimeContainer
                                 title="Watching"
                                 items={watching}
                                 mode="row"
@@ -46,7 +48,7 @@ export const MyAnime = () => {
                                 onViewAll={() => setSearchParams({ tab: "watching" })}
                                 onEntryChange={handleEntryChange}
                             />
-                            <MyAnimeConatiner
+                            <MyAnimeContainer
                                 title="Completed"
                                 items={completed}
                                 mode="row"
@@ -54,7 +56,7 @@ export const MyAnime = () => {
                                 onViewAll={() => setSearchParams({ tab: "completed" })}
                                 onEntryChange={handleEntryChange}
                             />
-                            <MyAnimeConatiner
+                            <MyAnimeContainer
                                 title="Plan to Watch"
                                 items={planToWatch}
                                 mode="row"
@@ -62,62 +64,74 @@ export const MyAnime = () => {
                                 onViewAll={() => setSearchParams({ tab: "plan-to-watch" })}
                                 onEntryChange={handleEntryChange}
                             />
-                            <MyAnimeConatiner
+                            <MyAnimeContainer
                                 title="Favorites"
                                 items={favorites}
                                 mode="row"
                                 entries={entries}
                                 onViewAll={() => setSearchParams({ tab: "favorites" })}
                                 onEntryChange={handleEntryChange}
-                            /> */}
+                            />
                         </div>
                     )}
                     {tab === "watching" && (
                         <div>
-                            {/* <MyAnimeConatiner
+                            <MyAnimeContainer
                                 title="Watching"
                                 items={watching}
                                 mode="grid"
                                 entries={entries}
                                 onViewAll={() => setSearchParams({ tab: "watching" })}
                                 onEntryChange={handleEntryChange}
-                            /> */}
+                            />
                         </div>
                     )}
                     {tab === "completed" && (
                         <div>
-                            {/* <MyAnimeConatiner
+                            <MyAnimeContainer
                                 title="Completed"
                                 items={completed}
                                 mode="grid"
                                 entries={entries}
                                 onViewAll={() => setSearchParams({ tab: "completed" })}
                                 onEntryChange={handleEntryChange}
-                            /> */}
+                            />
                         </div>
                     )}
                     {tab === "plan-to-watch" && (
                         <div>
-                            {/* <MyAnimeConatiner
+                            <MyAnimeContainer
                                 title="Plan to Watch"
                                 items={planToWatch}
                                 mode="grid"
                                 entries={entries}
                                 onViewAll={() => setSearchParams({ tab: "plan-to-watch" })}
                                 onEntryChange={handleEntryChange}
-                            /> */}
+                            />
                         </div>
                     )}
                     {tab === "favorites" && (
                         <div>
-                            {/* <MyAnimeConatiner
+                            <MyAnimeContainer
                                 title="Favorites"
                                 items={favorites}
                                 mode="grid"
                                 entries={entries}
                                 onViewAll={() => setSearchParams({ tab: "favorites" })}
                                 onEntryChange={handleEntryChange}
-                            /> */}
+                            />
+                        </div>
+                    )}
+                    {tab === "dropped" && (
+                        <div>
+                            <MyAnimeContainer
+                                title="Dropped"
+                                items={dropped}
+                                mode="grid"
+                                entries={entries}
+                                onViewAll={() => setSearchParams({ tab: "dropped" })}
+                                onEntryChange={handleEntryChange}
+                            />
                         </div>
                     )}
                 </div>

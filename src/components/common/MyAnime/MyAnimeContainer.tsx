@@ -14,7 +14,7 @@ type MyAnimeContainerType = {
 
 // PROGRESS WILL COME FROM DATABASE LATER
 
-export const MyAnimeConatiner = ({title, items, readOnly=false, onViewAll, mode, entries, onEntryChange}: MyAnimeContainerType) => {
+export const MyAnimeContainer = ({title, items, readOnly=false, onViewAll, mode, entries, onEntryChange}: MyAnimeContainerType) => {
 
     return (
         <div className="flex flex-col gap-4">
@@ -39,7 +39,6 @@ export const MyAnimeConatiner = ({title, items, readOnly=false, onViewAll, mode,
         </div>
         {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-white/30">
-                <p className="text-4xl mb-3 lg:text-6xl">🎌</p>
                 <p className="text-sm lg:text-base">No anime here yet</p>
             </div>
         ) :
