@@ -7,6 +7,7 @@ import { ResetPassword } from './pages/auth/ResetPassword';
 import { AppLayout } from './components/common/AppLayout';
 import { Settings } from './pages/Settings';
 import { Landing } from './pages/Landing';
+import { MyAnime } from './pages/MyAnime';
 export function AppRoutes() {
   return (
     <Routes>
@@ -20,6 +21,7 @@ export function AppRoutes() {
         <Route path="/home" element={<div>Home</div>} />
         <Route path="/browse" element={<Browse />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/my-anime" element={<MyAnime />} />
       </Route>
     </Routes>
   );
