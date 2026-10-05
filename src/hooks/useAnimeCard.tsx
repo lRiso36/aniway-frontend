@@ -1,16 +1,22 @@
 import { useState, useRef, useEffect } from 'react';
+import type { UserAnimeEntry } from '../types/UserAnimeEntryType.types';
+import type { AnimeType } from '../types/AnimeType.types';
+import { logAnime } from '../api/userAnime';
+import { toastError } from '../lib/toast';
 // import { toggleIsFavorite } from "../../services/userAnimeService";
 // import { toastError } from "../lib/toast";
 // import type { AnimeType } from "../types/AnimeType";
 // import type { UserAnimeEntry } from "../../types/UserAnimeEntry";
 
 export const useAnimeCard = (
-  // anime: AnimeType,
-  // entry: UserAnimeEntry | undefined,
-  // onEntryChange?: (updated: UserAnimeEntry | null, anilistId: number) => void,
+  anime: AnimeType,
+  entry: UserAnimeEntry | undefined,
+  canIncrement: boolean,
+  onEntryChange?: (updated: UserAnimeEntry | null, anilistId: number) => void
 ) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLeft, setOpenLeft] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [activeModal, setActiveModal] = useState<
     | 'log'
     | 'favorite'
@@ -66,6 +72,30 @@ export const useAnimeCard = (
   //         toastError("Failed to update favorite, please try again");
   //     }
   // }
+  // add isUpdating
+  const addToEpisodeCount = async () => {
+    if (!entry || !canIncrement || isUpdating) return;
+    setIsUpdating(true);
+    const prev = entry;
+    const next = (entry.currentEpisode ?? 0) + 1;
+    const optimistic: UserAnimeEntry = {
+      ...entry,
+      currentEpisode: next,
+    };
+    onEntryChange?.(optimistic, anime.anilistId);
+    try {
+      await logAnime({
+        animeId: anime._id,
+        status: entry.status,
+        currentEpisode: next,
+      });
+    } catch {
+      toastError('Failed to update episode, please try again');
+      onEntryChange?.(prev, anime.anilistId);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   return {
     menuOpen,
@@ -75,6 +105,6 @@ export const useAnimeCard = (
     setActiveModal,
     menuRef,
     handleMenuOpen,
-    // toggleFavorite,
+    addToEpisodeCount,
   };
 };

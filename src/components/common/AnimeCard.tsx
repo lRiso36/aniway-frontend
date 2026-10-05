@@ -40,6 +40,11 @@ export const AnimeCard = ({
     (updated) => onEntryChange?.(updated, anime.anilistId)
   );
 
+  const canIncrement =
+    entry?.status === 'watching' &&
+    !!anime.episodeCount &&
+    (entry.currentEpisode ?? 0) < anime.episodeCount;
+
   const MENU_ITEMS = [
     {
       label: (
@@ -92,8 +97,8 @@ export const AnimeCard = ({
     setActiveModal,
     menuRef,
     handleMenuOpen,
-    // toggleFavorite
-  } = useAnimeCard();
+    addToEpisodeCount,
+  } = useAnimeCard(anime, entry, canIncrement, onEntryChange);
 
   return (
     <div ref={menuRef} className="flex flex-col gap-2 relative">
@@ -158,21 +163,24 @@ export const AnimeCard = ({
         </p> */}
       </div>
 
-      {entry?.status === "watching" && anime.episodeCount && (
+      {entry?.status === 'watching' && anime.episodeCount && (
         <div className="flex items-center -mt-1.5 mb-1 gap-2">
           <p className="ml-1 text-white/50 text-xs">
             {`Ep ${entry.currentEpisode ?? 0} / ${anime.episodeCount}`}
           </p>
-          <Plus size={14} 
-          strokeWidth={2}
-          className="relative top-[1px] text-white cursor-pointer transition hover:text-purple-500 hover:scale-125" 
-          // onClick={}
-          />
+          {canIncrement && (
+            <Plus
+              size={14}
+              strokeWidth={2}
+              className="relative top-[1px] text-white cursor-pointer transition hover:text-purple-500 hover:scale-125"
+              onClick={addToEpisodeCount}
+            />
+          )}
         </div>
       )}
       {!readOnly && (
         <>
-          {activeModal === "log" && (
+          {activeModal === 'log' && (
             <LogModal
               isOpen={activeModal === 'log'}
               onClose={() => setActiveModal(null)}
