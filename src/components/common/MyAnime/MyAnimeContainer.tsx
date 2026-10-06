@@ -77,6 +77,7 @@ export const MyAnimeContainer = ({
                 anime={anime}
                 entry={entries?.find((e) => e.anilistId === anime.anilistId)}
                 onEntryChange={onEntryChange}
+                myAnimePage={true}
                 readOnly={readOnly}
               />
             </div>

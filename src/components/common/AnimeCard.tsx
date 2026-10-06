@@ -13,11 +13,14 @@ import { Heart, Tv, Star, ListPlus, Plus } from 'lucide-react';
 import { LogModal } from './AnimeCarMenu/LogModal';
 import type { UserAnimeEntry } from '../../types/UserAnimeEntryType.types';
 import { useToggleFavorite } from '../../hooks/useToggleFavorite';
+import { statusStyles } from '../../data/statusStyles';
 
 type AnimeCardType = {
   anime: AnimeType;
   entry?: UserAnimeEntry;
   readOnly?: boolean;
+  showStatusStyle?: boolean;
+  myAnimePage?: boolean;
   onEntryChange?: (updated: UserAnimeEntry | null, anilistId: number) => void;
   //   onStatusChange?: (anilistId: number, status: UserAnimeStatus) => void;
   onRate?: (anilistId: number) => void;
@@ -31,6 +34,8 @@ export const AnimeCard = ({
   anime,
   entry,
   readOnly = false,
+  showStatusStyle = false,
+  myAnimePage = false,
   onEntryChange,
 }: AnimeCardType) => {
   const canRemove = !!entry;
@@ -41,7 +46,7 @@ export const AnimeCard = ({
   );
 
   const canIncrement =
-    entry?.status === 'watching' &&
+    (entry?.status === 'watching' || entry?.status === 'rewatching') &&
     !!anime.episodeCount &&
     (entry.currentEpisode ?? 0) < anime.episodeCount;
 
@@ -111,6 +116,18 @@ export const AnimeCard = ({
           alt={anime.titleEnglish ?? anime.titleRomaji}
           className="w-full h-full object-cover"
         />
+        {showStatusStyle && entry?.status && (
+          <div
+            className={`absolute inset-y-0 left-0 w-1 z-10 ${statusStyles[entry.status]}`}
+          />
+        )}
+        {myAnimePage && (
+          <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 pt-6 pb-1.5 text-xs text-white bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+            <span>★ {entry?.score ?? '-'}</span>
+            <span>↻ {entry?.repeatCount ?? 0}</span>
+          </div>
+        )}
+
         {!readOnly && (
           <div className="absolute top-1 right-1 z-20">
             <button
@@ -163,21 +180,22 @@ export const AnimeCard = ({
         </p> */}
       </div>
 
-      {entry?.status === 'watching' && anime.episodeCount && (
-        <div className="flex items-center -mt-1.5 mb-1 gap-2">
-          <p className="ml-1 text-white/50 text-xs">
-            {`Ep ${entry.currentEpisode ?? 0} / ${anime.episodeCount}`}
-          </p>
-          {canIncrement && (
-            <Plus
-              size={14}
-              strokeWidth={2}
-              className="relative top-[1px] text-white cursor-pointer transition hover:text-purple-500 hover:scale-125"
-              onClick={addToEpisodeCount}
-            />
-          )}
-        </div>
-      )}
+      {(entry?.status === 'watching' || entry?.status === 'rewatching') &&
+        anime.episodeCount && (
+          <div className="flex items-center -mt-1.5 mb-1 gap-2">
+            <p className="ml-1 text-white/50 text-xs">
+              {`Ep ${entry.currentEpisode ?? 0} / ${anime.episodeCount}`}
+            </p>
+            {canIncrement && (
+              <Plus
+                size={14}
+                strokeWidth={2}
+                className="relative top-[1px] text-white cursor-pointer transition hover:text-purple-500 hover:scale-125"
+                onClick={addToEpisodeCount}
+              />
+            )}
+          </div>
+        )}
       {!readOnly && (
         <>
           {activeModal === 'log' && (

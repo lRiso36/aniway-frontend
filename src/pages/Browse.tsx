@@ -297,6 +297,7 @@ export const Browse = () => {
                         (e) => e.anilistId === anime.anilistId
                       )}
                       onEntryChange={updateEntry}
+                      showStatusStyle={true}
                     />
                   </div>
                 ))}

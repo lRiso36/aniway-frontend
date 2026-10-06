@@ -1,28 +1,31 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from 'react-router-dom';
 
 type MyAnimeNavBar = {
-    selected?: string;
-}
+  selected?: string;
+};
 const MY_ANIME_NAV_ITEMS = [
-    { id: "overview", label: "Overview" },
-    { id: "watching", label: "Watching" },
-    { id: "completed", label: "Completed" },
-    { id: "plan-to-watch", label: "Plan To Watch" },
-    { id: "favorites", label: "Favorites" },
-    { id: "dropped", label: "Dropped" }
-]
+  { id: 'overview', label: 'Overview' },
+  { id: 'watching', label: 'Watching' },
+  { id: 'completed', label: 'Completed' },
+  { id: 'plan-to-watch', label: 'Plan To Watch' },
+  { id: 'favorites', label: 'Favorites' },
+  { id: 'rewatching', label: 'Rewatching' },
+  { id: 'paused', label: 'Paused' },
+  { id: 'dropped', label: 'Dropped' },
+];
 
 export const MyAnimeNavBar = () => {
-    const [selectedUrlParams, setSelectedUrlParams] = useSearchParams();
-    const selected = selectedUrlParams.get("tab") || "overview";
+  const [selectedUrlParams, setSelectedUrlParams] = useSearchParams();
+  const selected = selectedUrlParams.get('tab') || 'overview';
 
-    const handleSelect = (id: string) => {
-        setSelectedUrlParams({ tab: id });
-    };
+  const handleSelect = (id: string) => {
+    setSelectedUrlParams({ tab: id });
+  };
 
-    return (
-        <div className="relative w-full">
-            <div className="
+  return (
+    <div className="relative w-full">
+      <div
+        className="
         absolute 
         right-0 
         top-0 
@@ -34,15 +37,16 @@ export const MyAnimeNavBar = () => {
         z-10 
         pointer-events-none
         sm:hidden
-        "/>
-            <div className="flex gap-1 overflow-x-auto scrollbar-none w-full border-b border-white/10 pb-5">
-                {MY_ANIME_NAV_ITEMS.map((item) => {
-                    const isActive = selected === item.id;
-                    return (
-                        <button
-                            key={item.id}
-                            onClick={() => handleSelect(item.id)}
-                            className={`
+        "
+      />
+      <div className="flex gap-1 overflow-x-auto scrollbar-none w-full border-b border-white/10 pb-5">
+        {MY_ANIME_NAV_ITEMS.map((item) => {
+          const isActive = selected === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => handleSelect(item.id)}
+              className={`
                 px-3 
                 py-1.5 
                 sm:px-4
@@ -55,17 +59,17 @@ export const MyAnimeNavBar = () => {
                 transition-colors 
                 whitespace-nowrap 
                 shrink-0
-              ${isActive
-                                    ? "bg-purple-600 text-white"
-                                    : "text-white/50 hover:text-white/80"
-                                }`}
-                        >
-                            {item.label}
-                        </button>
-                    );
-                })}
-            </div>
-        </div>
-    )
-
-}
+              ${
+                isActive
+                  ? 'bg-purple-600 text-white'
+                  : 'text-white/50 hover:text-white/80'
+              }`}
+            >
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
