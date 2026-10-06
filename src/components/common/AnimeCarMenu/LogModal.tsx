@@ -32,7 +32,7 @@ export const LogModal = ({
   const initialFormData: LogFormData = {
     status: currentEntry?.status ?? undefined,
     currentEpisode: currentEntry?.currentEpisode ?? 0,
-    score: currentEntry?.score ?? 0,
+    score: currentEntry?.score ?? undefined,
     startDate: currentEntry?.startDate ?? '',
     finishDate: currentEntry?.finishDate ?? '',
     repeatCount: currentEntry?.repeatCount ?? 0,
@@ -158,9 +158,11 @@ export const LogModal = ({
             <FieldLabel>Score</FieldLabel>
             <NumberStepper
               value={formData.score}
-              onChange={(newScore) => updateField('score', newScore)}
               max={10}
-              step={0.1}
+              step={0.5}
+              allowEmpty
+              onChange={(v) => setFormData((f) => ({ ...f, score: v }))}
+              onClear={() => setFormData((f) => ({ ...f, score: undefined }))}
             />
           </div>
 

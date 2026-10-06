@@ -4,10 +4,12 @@ import { FieldBox } from './LogFieldBox';
 const MIN = 0;
 
 type NumberStepperProps = {
-  value: number;
+  value?: number;
   onChange: (value: number) => void;
   max: number;
   step?: number;
+  allowEmpty?: boolean;
+  onClear?: () => void;
 };
 
 export const NumberStepper = ({
@@ -15,11 +17,13 @@ export const NumberStepper = ({
   onChange,
   max,
   step = 1,
+  allowEmpty = false,
+  onClear,
 }: NumberStepperProps) => {
-  const [text, setText] = useState(value.toString());
+  const [text, setText] = useState(value?.toString() ?? '');
 
   useEffect(() => {
-    setText(value.toString());
+    setText(value?.toString() ?? '');
   }, [value]);
 
   const clamp = (v: number) => Math.min(Math.max(v, MIN), max);
@@ -36,6 +40,11 @@ export const NumberStepper = ({
   };
 
   const handleBlur = () => {
+    if (text.trim() === '' && allowEmpty) {
+      onClear?.();
+      setText('');
+      return;
+    }
     const parsed = parseFloat(text);
     const finalValue = isNaN(parsed) ? MIN : clamp(parsed);
     onChange(finalValue);
@@ -56,7 +65,7 @@ export const NumberStepper = ({
         <button
           type="button"
           aria-label="Increase"
-          onClick={() => onChange(clamp(roundToStep(value + step)))}
+          onClick={() => onChange(clamp(roundToStep((value ?? MIN) + step)))}
           className="flex-1 flex items-center justify-center text-white/40 hover:text-white transition-colors"
         >
           <svg
@@ -72,7 +81,7 @@ export const NumberStepper = ({
         <button
           type="button"
           aria-label="Decrease"
-          onClick={() => onChange(clamp(roundToStep(value - step)))}
+          onClick={() => onChange(clamp(roundToStep((value ?? MIN) - step)))}
           className="flex-1 flex items-center justify-center text-white/40 hover:text-white transition-colors"
         >
           <svg

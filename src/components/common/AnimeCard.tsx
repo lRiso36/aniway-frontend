@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 // import toast from "react-hot-toast";
 import { useAnimeCard } from '../../hooks/useAnimeCard';
 import { AnimeCardMenu } from './AnimeCardMenu';
-import { Heart, Tv, Star, ListPlus, Plus } from 'lucide-react';
+import { Heart, Tv, Star, ListPlus, Plus, RotateCw } from 'lucide-react';
 import { LogModal } from './AnimeCarMenu/LogModal';
 import type { UserAnimeEntry } from '../../types/UserAnimeEntryType.types';
 import { useToggleFavorite } from '../../hooks/useToggleFavorite';
@@ -122,9 +122,19 @@ export const AnimeCard = ({
           />
         )}
         {myAnimePage && (
-          <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 pt-6 pb-1.5 text-xs text-white bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
-            <span>★ {entry?.score ?? '-'}</span>
-            <span>↻ {entry?.repeatCount ?? 0}</span>
+          <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 pt-2 pb-1.5 text-xs text-white bg-black/60 pointer-events-none">
+            {entry?.score && (
+              <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 py-1.5 text-xs text-white bg-black/60 pointer-events-none">
+                <span className="flex items-center gap-1">
+                  <Star className="size-3" fill="red" />
+                  {entry.score ?? "-"}
+                </span>
+                <span className="flex items-center gap-1">
+                  <RotateCw className="size-3" />
+                  {entry.repeatCount ?? 0}
+                </span>
+              </div>
+            )}
           </div>
         )}
 

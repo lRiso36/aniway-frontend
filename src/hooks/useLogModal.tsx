@@ -21,7 +21,7 @@ export const useLogModal = (
         status: formData.status ?? 'planning',
         currentEpisode: formData.currentEpisode,
         repeatCount: formData.repeatCount,
-        score: formData.score,
+        score: formData.score || undefined,
         startDate: formData.startDate || undefined,
         finishDate: formData.finishDate || undefined,
         notes: formData.notes,
