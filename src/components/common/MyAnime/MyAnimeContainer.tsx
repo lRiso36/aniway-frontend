@@ -38,13 +38,14 @@ export const MyAnimeContainer = ({
     <div className="flex flex-col gap-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-white font-semibold text-base sm:text-lg md:text-xl px-2 py-1">
-          {title}
-        </h2>
         {mode === 'row' && (
-          <button
-            onClick={onViewAll}
-            className="
+          <>
+            <h2 className="text-white font-semibold text-base sm:text-lg md:text-xl px-2 py-1">
+              {title}
+            </h2>
+            <button
+              onClick={onViewAll}
+              className="
                 text-purple-400 
                 text-xs 
                 sm:text-sm 
@@ -52,9 +53,10 @@ export const MyAnimeContainer = ({
                 transition-colors
                 px-3
                 "
-          >
-            View all
-          </button>
+            >
+              View all
+            </button>
+          </>
         )}
       </div>
       {loading ? (

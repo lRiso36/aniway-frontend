@@ -16,6 +16,8 @@ export const MyAnime = () => {
     favorites,
     entries,
     dropped,
+    paused,
+    rewatching,
     handleEntryChange,
   } = useMyAnime();
 
@@ -80,10 +82,37 @@ export const MyAnime = () => {
                 onViewAll={() => setSearchParams({ tab: 'favorites' })}
                 onEntryChange={handleEntryChange}
               />
+              <MyAnimeContainer
+                title="Rewatching"
+                items={rewatching}
+                mode="row"
+                entries={entries}
+                loading={loading}
+                onViewAll={() => setSearchParams({ tab: 'rewatching' })}
+                onEntryChange={handleEntryChange}
+              />
+              <MyAnimeContainer
+                title="Paused"
+                items={paused}
+                mode="row"
+                entries={entries}
+                loading={loading}
+                onViewAll={() => setSearchParams({ tab: 'paused' })}
+                onEntryChange={handleEntryChange}
+              />
+              <MyAnimeContainer
+                title="Dropped"
+                items={dropped}
+                mode="row"
+                entries={entries}
+                loading={loading}
+                onViewAll={() => setSearchParams({ tab: 'dropped' })}
+                onEntryChange={handleEntryChange}
+              />
             </div>
           )}
           {tab === 'watching' && (
-            <div>
+            <div className="-mt-4">
               <MyAnimeContainer
                 title="Watching"
                 items={watching}
@@ -96,7 +125,7 @@ export const MyAnime = () => {
             </div>
           )}
           {tab === 'completed' && (
-            <div>
+            <div className="-mt-4">
               <MyAnimeContainer
                 title="Completed"
                 items={completed}
@@ -109,7 +138,7 @@ export const MyAnime = () => {
             </div>
           )}
           {tab === 'plan-to-watch' && (
-            <div>
+            <div className="-mt-4">
               <MyAnimeContainer
                 title="Plan to Watch"
                 items={planToWatch}
@@ -122,7 +151,7 @@ export const MyAnime = () => {
             </div>
           )}
           {tab === 'favorites' && (
-            <div>
+            <div className="-mt-4">
               <MyAnimeContainer
                 title="Favorites"
                 items={favorites}
@@ -135,7 +164,7 @@ export const MyAnime = () => {
             </div>
           )}
           {tab === 'dropped' && (
-            <div>
+            <div className="-mt-4">
               <MyAnimeContainer
                 title="Dropped"
                 items={dropped}
@@ -143,6 +172,32 @@ export const MyAnime = () => {
                 entries={entries}
                 loading={loading}
                 onViewAll={() => setSearchParams({ tab: 'dropped' })}
+                onEntryChange={handleEntryChange}
+              />
+            </div>
+          )}
+          {tab === 'rewatching' && (
+            <div className="-mt-4">
+              <MyAnimeContainer
+                title="Rewatching"
+                items={rewatching}
+                mode="grid"
+                entries={entries}
+                loading={loading}
+                onViewAll={() => setSearchParams({ tab: 'rewatching' })}
+                onEntryChange={handleEntryChange}
+              />
+            </div>
+          )}
+          {tab === 'paused' && (
+            <div className="-mt-4">
+              <MyAnimeContainer
+                title="Paused"
+                items={paused}
+                mode="grid"
+                entries={entries}
+                loading={loading}
+                onViewAll={() => setSearchParams({ tab: 'paused' })}
                 onEntryChange={handleEntryChange}
               />
             </div>
