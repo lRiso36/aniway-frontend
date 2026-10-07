@@ -122,15 +122,15 @@ export const AnimeCard = ({
           />
         )}
         {myAnimePage && (
-          <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 pt-2 pb-1.5 text-xs text-white bg-black/60 pointer-events-none">
+          <div>
             {entry?.score && (
               <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 py-1.5 text-xs text-white bg-black/60 pointer-events-none">
-                <span className="flex items-center gap-1">
-                  <Star className="size-3" fill="red" />
+                <span className="flex items-center gap-1 text-xs sm:text-sm">
+                  <Star className="size-3 sm:size-4 text-purple-500" fill="currentColor" />
                   {entry.score ?? "-"}
                 </span>
-                <span className="flex items-center gap-1">
-                  <RotateCw className="size-3" />
+                <span className="flex items-center gap-1 text-xs sm:text-sm">
+                  <RotateCw className="size-3 sm:size-4" />
                   {entry.repeatCount ?? 0}
                 </span>
               </div>

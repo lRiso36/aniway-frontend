@@ -10,7 +10,7 @@ import { StatusDropdown } from '../../ui/StatusDropdwon';
 import { FieldLabel } from '../../ui/LogFieldLabel';
 import type { LogFormData } from '../../../types/LogFormData.types';
 import { statusOptions } from '../../../data/statusOptions';
-import { Heart } from 'lucide-react';
+import { Heart, X } from 'lucide-react';
 import { useToggleFavorite } from '../../../hooks/useToggleFavorite';
 import { DatePicker } from '../../ui/DatePicker';
 

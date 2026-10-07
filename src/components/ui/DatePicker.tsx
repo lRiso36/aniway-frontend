@@ -23,9 +23,13 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
   const [draft, setDraft] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const defaultClassNames = getDefaultClassNames();
-  const inputText = draft ?? value;
+  const dateOnly = value ? value.slice(0, 10) : '';
+  const selected = isValidDate(dateOnly)
+    ? new Date(dateOnly + 'T00:00:00')
+    : undefined;
+  const inputText = draft ?? dateOnly;
 
-  const selected = value ? new Date(value + 'T00:00:00') : undefined;
+
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
