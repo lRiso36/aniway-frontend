@@ -14,6 +14,7 @@ import { LogModal } from './AnimeCarMenu/LogModal';
 import type { UserAnimeEntry } from '../../types/UserAnimeEntryType.types';
 import { useToggleFavorite } from '../../hooks/useToggleFavorite';
 import { statusStyles } from '../../data/statusStyles';
+import { RemoveModal } from './AnimeCarMenu/RemoveModal';
 
 type AnimeCardType = {
   anime: AnimeType;
@@ -103,6 +104,7 @@ export const AnimeCard = ({
     menuRef,
     handleMenuOpen,
     addToEpisodeCount,
+    addtoRepeatCount,
   } = useAnimeCard(anime, entry, canIncrement, onEntryChange);
 
   return (
@@ -123,21 +125,25 @@ export const AnimeCard = ({
         )}
         {myAnimePage && (
           <div>
-            {entry?.score && (
-              <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 py-1.5 text-xs text-white bg-black/60 pointer-events-none">
-                <span className="flex items-center gap-1 text-xs sm:text-sm">
-                  <Star
-                    className="size-3 sm:size-4 text-purple-500"
-                    fill="currentColor"
-                  />
-                  {entry.score ?? '-'}
-                </span>
-                <span className="flex items-center gap-1 text-xs sm:text-sm ">
-                  <RotateCw className="size-3 sm:size-4 hover:text-purple-500 hover:scale-125" />
-                  {entry.repeatCount ?? 0}
-                </span>
-              </div>
-            )}
+            <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 py-1.5 text-xs text-white bg-black/60 pointer-events-none">
+              <span className="flex items-center gap-1 text-xs sm:text-sm">
+                <Star
+                  className="size-3 sm:size-4 text-purple-500"
+                  fill="currentColor"
+                />
+                {entry?.score ?? '-'}
+              </span>
+              <span className="flex items-center gap-1 text-xs sm:text-sm pointer-events-auto">
+                <RotateCw
+                  className="size-3 sm:size-4 pointer-events-auto hover:text-purple-500 hover:scale-125"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addtoRepeatCount();
+                  }}
+                />
+                {entry?.repeatCount ?? 0}
+              </span>
+            </div>
           </div>
         )}
 
@@ -162,7 +168,7 @@ export const AnimeCard = ({
           </div>
         )}
 
-        <div className="absolute inset-0 border-2 border-purple-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-10" />
+        <div className="absolute inset-0 border-2 border-purple-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none" />
       </div>
 
       {!readOnly && (
@@ -220,6 +226,18 @@ export const AnimeCard = ({
               onSave={(updated) => {
                 setActiveModal(null);
                 onEntryChange?.(updated, anime.anilistId);
+              }}
+            />
+          )}
+          {activeModal === 'remove' && (
+            <RemoveModal
+              isOpen={activeModal === 'remove'}
+              onClose={() => setActiveModal(null)}
+              anime={anime}
+              currentEntry={entry}
+              onSave={() => {
+                setActiveModal(null);
+                onEntryChange?.(null, anime.anilistId);
               }}
             />
           )}

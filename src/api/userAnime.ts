@@ -27,7 +27,11 @@ export async function toggleIsFavorite(animeId: string) {
 
 export async function getUserAnimeEntries(includeAnime = false) {
   const response = await client.get('/user-anime/', {
-    params: { includeAnime},
+    params: { includeAnime },
   });
   return response.data;
+}
+
+export async function removeAnimeEntry(animeId: string) {
+  await client.delete(`/user-anime/${animeId}`);
 }

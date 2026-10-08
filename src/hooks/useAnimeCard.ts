@@ -97,6 +97,30 @@ export const useAnimeCard = (
     }
   };
 
+  const addtoRepeatCount = async () => {
+    if (!entry || isUpdating) return;
+    setIsUpdating(true);
+    const prev = entry;
+    const next = (entry.repeatCount ?? 0) + 1;
+    const optimistic: UserAnimeEntry = {
+      ...entry,
+      repeatCount: next,
+    };
+    onEntryChange?.(optimistic, anime.anilistId);
+    try {
+      await logAnime({
+        animeId: anime._id,
+        status: entry.status,
+        repeatCount: next,
+      });
+    } catch {
+      toastError('Failed to update repeat count, please try again');
+      onEntryChange?.(prev, anime.anilistId);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   return {
     menuOpen,
     setMenuOpen,
@@ -106,5 +130,6 @@ export const useAnimeCard = (
     menuRef,
     handleMenuOpen,
     addToEpisodeCount,
+    addtoRepeatCount,
   };
 };
