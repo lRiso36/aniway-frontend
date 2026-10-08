@@ -126,11 +126,14 @@ export const AnimeCard = ({
             {entry?.score && (
               <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-2 py-1.5 text-xs text-white bg-black/60 pointer-events-none">
                 <span className="flex items-center gap-1 text-xs sm:text-sm">
-                  <Star className="size-3 sm:size-4 text-purple-500" fill="currentColor" />
-                  {entry.score ?? "-"}
+                  <Star
+                    className="size-3 sm:size-4 text-purple-500"
+                    fill="currentColor"
+                  />
+                  {entry.score ?? '-'}
                 </span>
-                <span className="flex items-center gap-1 text-xs sm:text-sm">
-                  <RotateCw className="size-3 sm:size-4" />
+                <span className="flex items-center gap-1 text-xs sm:text-sm ">
+                  <RotateCw className="size-3 sm:size-4 hover:text-purple-500 hover:scale-125" />
                   {entry.repeatCount ?? 0}
                 </span>
               </div>
