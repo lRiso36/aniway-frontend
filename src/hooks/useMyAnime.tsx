@@ -20,20 +20,14 @@ export const useMyAnime = () => {
       if (updated === null) {
         return prev.filter((item) => item.entry.anilistId !== anilistId);
       }
-      return prev
-        .map((item) =>
-          item.entry.anilistId === anilistId
-            ? {
-                ...item,
-                entry: { ...updated, updatedAt: new Date().toISOString() },
-              }
-            : item
-        )
-        .sort((a, b) => {
-          const aDate = a.entry.updatedAt ?? '';
-          const bDate = b.entry.updatedAt ?? '';
-          return bDate.localeCompare(aDate);
-        });
+      return prev.map((item) =>
+        item.entry.anilistId === anilistId
+          ? {
+              ...item,
+              entry: { ...updated, updatedAt: new Date().toISOString() },
+            }
+          : item
+      );
     });
   };
 
@@ -56,11 +50,22 @@ export const useMyAnime = () => {
     fetchAnimeData();
   }, []);
 
+  const toTime = (d?: string | Date) => (d ? new Date(d).getTime() : 0);
+
   const watching = animeEntryList
     .filter((item) => item.entry.status === 'watching')
+    .sort(
+      (a, b) =>
+        new Date(b.entry.updatedAt).getTime() -
+        new Date(a.entry.updatedAt).getTime()
+    )
     .map((item) => item.anime);
+  console.log(
+    animeEntryList.map((i) => [typeof i.entry.finishDate, i.entry.finishDate])
+  );
   const completed = animeEntryList
     .filter((item) => item.entry.status === 'completed')
+    .sort((a, b) => toTime(b.entry.finishDate) - toTime(a.entry.finishDate))
     .map((item) => item.anime);
   const planToWatch = animeEntryList
     .filter((item) => item.entry.status === 'planning')
@@ -73,6 +78,11 @@ export const useMyAnime = () => {
     .map((item) => item.anime);
   const rewatching = animeEntryList
     .filter((item) => item.entry.status === 'rewatching')
+    .sort(
+      (a, b) =>
+        new Date(b.entry.updatedAt).getTime() -
+        new Date(a.entry.updatedAt).getTime()
+    )
     .map((item) => item.anime);
   const paused = animeEntryList
     .filter((item) => item.entry.status === 'paused')
