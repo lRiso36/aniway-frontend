@@ -29,8 +29,6 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
     : undefined;
   const inputText = draft ?? dateOnly;
 
-
-
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (

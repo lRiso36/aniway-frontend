@@ -1,4 +1,4 @@
-import type { AnimeType } from "./AnimeType.types";
+import type { AnimeType } from './AnimeType.types';
 
 export type UserAnimeStatus =
   'watching' | 'rewatching' | 'completed' | 'planning' | 'paused' | 'dropped';

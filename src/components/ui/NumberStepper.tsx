@@ -64,14 +64,13 @@ export const NumberStepper = ({
       />
       {allowEmpty && text !== '' && (
         <button
-            aria-label="Clear date"
-            className="mr-8 w-4 h-4 rounded-full bg-zinc-700/80 hover:bg-purple-600/30 flex items-center justify-center text-white shrink-0 transition-colors"
-            onClick={onClear}
-          >
-            <X className="w-2.5 h-2.5" />
-          </button>
-      )
-      }
+          aria-label="Clear date"
+          className="mr-8 w-4 h-4 rounded-full bg-zinc-700/80 hover:bg-purple-600/30 flex items-center justify-center text-white shrink-0 transition-colors"
+          onClick={onClear}
+        >
+          <X className="w-2.5 h-2.5" />
+        </button>
+      )}
       <div className="absolute right-1 top-1 bottom-1 flex flex-col w-5">
         <button
           type="button"
@@ -106,6 +105,6 @@ export const NumberStepper = ({
           </svg>
         </button>
       </div>
-    </FieldBox >
+    </FieldBox>
   );
 };
