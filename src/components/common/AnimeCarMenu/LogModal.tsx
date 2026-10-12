@@ -160,6 +160,7 @@ export const LogModal = ({
               value={formData.score}
               max={10}
               step={0.5}
+              decimalPlaces={2}
               allowEmpty
               onChange={(v) => setFormData((f) => ({ ...f, score: v }))}
               onClear={() => setFormData((f) => ({ ...f, score: undefined }))}

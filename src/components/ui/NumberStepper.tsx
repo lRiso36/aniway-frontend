@@ -9,6 +9,7 @@ type NumberStepperProps = {
   onChange: (value: number) => void;
   max: number;
   step?: number;
+  decimalPlaces?: number;
   allowEmpty?: boolean;
   onClear?: () => void;
 };
@@ -18,25 +19,34 @@ export const NumberStepper = ({
   onChange,
   max,
   step = 1,
+  decimalPlaces,
   allowEmpty = false,
   onClear,
 }: NumberStepperProps) => {
   const [text, setText] = useState(value?.toString() ?? '');
 
   useEffect(() => {
-    setText(value?.toString() ?? '');
+    setText((current) =>
+      value !== undefined && parseFloat(current) === value
+        ? current
+        : (value?.toString() ?? '')
+    );
   }, [value]);
 
   const clamp = (v: number) => Math.min(Math.max(v, MIN), max);
 
-  const roundToStep = (v: number) => Math.round(v * 100) / 100;
+  const roundValue = (v: number, places = decimalPlaces) => {
+    if (places === undefined) return v;
+    const factor = 10 ** places;
+    return Math.round((v + Number.EPSILON * Math.abs(v)) * factor) / factor;
+  };
 
   const handleTextChange = (raw: string) => {
     setText(raw);
 
     const parsed = parseFloat(raw);
     if (!isNaN(parsed)) {
-      onChange(clamp(parsed));
+      onChange(decimalPlaces === undefined ? clamp(parsed) : parsed);
     }
   };
 
@@ -47,7 +57,7 @@ export const NumberStepper = ({
       return;
     }
     const parsed = parseFloat(text);
-    const finalValue = isNaN(parsed) ? MIN : clamp(parsed);
+    const finalValue = isNaN(parsed) ? MIN : roundValue(clamp(parsed));
     onChange(finalValue);
     setText(finalValue.toString());
   };
@@ -75,7 +85,9 @@ export const NumberStepper = ({
         <button
           type="button"
           aria-label="Increase"
-          onClick={() => onChange(clamp(roundToStep((value ?? MIN) + step)))}
+          onClick={() =>
+            onChange(clamp(roundValue((value ?? MIN) + step, decimalPlaces ?? 2)))
+          }
           className="flex-1 flex items-center justify-center text-white/40 hover:text-white transition-colors"
         >
           <svg
@@ -91,7 +103,9 @@ export const NumberStepper = ({
         <button
           type="button"
           aria-label="Decrease"
-          onClick={() => onChange(clamp(roundToStep((value ?? MIN) - step)))}
+          onClick={() =>
+            onChange(clamp(roundValue((value ?? MIN) - step, decimalPlaces ?? 2)))
+          }
           className="flex-1 flex items-center justify-center text-white/40 hover:text-white transition-colors"
         >
           <svg
