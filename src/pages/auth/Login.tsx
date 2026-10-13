@@ -4,12 +4,12 @@ import { AuthLayout } from '../../components/layout/AuthLayout';
 import { AuthContainer } from '../../components/common/AuthPages/AuthContainer';
 import { FormInput } from '../../components/ui/FormInput';
 import { AuthButtons } from '../../components/ui/AuthButtons';
-import { getMe, login } from '../../api/auth';
+import { getMe, googleLogin, login } from '../../api/auth';
 import axios from 'axios';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { GoogleLoginButton } from '../../components/social-logins';
-import { toastSuccess } from '../../lib/toast';
+import { toastError, toastSuccess } from '../../lib/toast';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -21,6 +21,9 @@ export const Login = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [needUsername, setNeedUsername] = useState(false);
+  const [googleCredential, setGoogleCredential] = useState('');
+
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const approved = !!(formData.email && formData.password);
@@ -45,6 +48,39 @@ export const Login = () => {
       }
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleGoogleSubmit(credential: string, username?: string) {
+    setLoading(true);
+    try {
+      const { accessToken, needsUsername } = await googleLogin(
+        credential,
+        username
+      );
+
+      if (needsUsername) {
+        setNeedUsername(true);
+        setGoogleCredential(credential);
+        console.log('needs username')
+        return;
+      }
+
+      if (!accessToken) throw new Error('Missing access token');
+
+      const { data } = await getMe();
+      const { _id, ...rest } = data.user;
+      setAuth({ id: _id, ...rest }, accessToken);
+      navigate('/home');
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        toastError(err.response.data.message);
+      } else {
+        console.log(err)
+        toastError('Something went wrong. Please try again.');
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -117,7 +153,11 @@ export const Login = () => {
           <div className="mt-3">
             <GoogleLoginButton
               onSuccess={(response) => {
-                console.log('Google login successful:', response);
+                if (!response.credential) {
+                  toastError('Google login failed. Please try again.');
+                  return;
+                }
+                handleGoogleSubmit(response.credential);
               }}
             />
           </div>

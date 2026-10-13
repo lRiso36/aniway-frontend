@@ -18,8 +18,17 @@ export async function registerUser(data: RegisterData) {
 
 export async function login(data: LoginData) {
   const response = await client.post('/auth/login', data);
-  const { accessToken, user } = response.data;
-  return { accessToken, user };
+  const { accessToken } = response.data;
+  return { accessToken };
+}
+
+export async function googleLogin(credential: string, username?: string) {
+  const response = await client.post('/auth/googleLogin', {
+    credential, 
+    username,
+  });
+  const { accessToken, needsUsername } = response.data;
+  return { accessToken, needsUsername };
 }
 
 export async function forgotPassword(email: string) {
