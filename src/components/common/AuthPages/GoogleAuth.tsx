@@ -60,6 +60,7 @@ export const GoogleAuth = ({ setLoading, loading, text }: Props) => {
     }
   }
 
+  // TODO: NOTIFY USER PASSWORD DELETED
   return (
     <>
       <div className="mt-3">

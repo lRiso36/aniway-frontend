@@ -130,13 +130,15 @@ export const SignUpForm = ({
         label={loading ? 'Signing Up...' : 'Sign Up'}
       />
 
-      <p className="text-center text-xs text-gray-400 my-1">or</p>
+      <p className="text-center text-xs text-gray-400">or</p>
 
-      <GoogleAuth
-        loading={loading}
-        setLoading={setLoading}
-        text="signup_with"
-      />
+      <div className="-mt-2">
+        <GoogleAuth
+          loading={loading}
+          setLoading={setLoading}
+          text="signup_with"
+        />
+      </div>
     </div>
   );
 };
