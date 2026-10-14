@@ -149,8 +149,6 @@ export const Login = () => {
                 Forgot password?
               </p>
             </div>
-
-            {/* ASK ABOUT WIDTH ON GOOGLE BUTTONS */}
           </div>
           <div className="w-full mt-3">
             <AuthButtons
