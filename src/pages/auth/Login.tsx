@@ -4,13 +4,12 @@ import { AuthLayout } from '../../components/layout/AuthLayout';
 import { AuthContainer } from '../../components/common/AuthPages/AuthContainer';
 import { FormInput } from '../../components/ui/FormInput';
 import { AuthButtons } from '../../components/ui/AuthButtons';
-import { getMe, googleLogin, login } from '../../api/auth';
+import { getMe, login } from '../../api/auth';
 import axios from 'axios';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { GoogleLoginButton } from '../../components/social-logins';
-import { toastError, toastSuccess } from '../../lib/toast';
-import { UsernameModal } from '../../components/common/AuthPages/UsernameModal';
+import { toastSuccess } from '../../lib/toast';
+import { GoogleAuth } from '../../components/common/AuthPages/GoogleAuth';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -22,19 +21,10 @@ export const Login = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [needUsername, setNeedUsername] = useState(false);
-  const [googleCredential, setGoogleCredential] = useState('');
-  const [googleError, setGoogleError] = useState('');
 
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const approved = !!(formData.email && formData.password);
-
-  const closeUsernameModal = () => {
-    setNeedUsername(false);
-    setGoogleCredential('');
-    setGoogleError('');
-  };
 
   async function handleSubmit() {
     setError('');
@@ -54,41 +44,6 @@ export const Login = () => {
       } else {
         setError('Something went wrong. Please try again.');
       }
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handleGoogleSubmit(credential: string, username?: string) {
-    setLoading(true);
-    setGoogleError('');
-    try {
-      const { accessToken, needsUsername } = await googleLogin(
-        credential,
-        username
-      );
-
-      if (needsUsername) {
-        setNeedUsername(true);
-        setGoogleCredential(credential);
-        console.log('needs username');
-        return;
-      }
-
-      if (!accessToken) throw new Error('Missing access token');
-
-      const { data } = await getMe();
-      const { _id, ...rest } = data.user;
-      setAuth({ id: _id, ...rest }, accessToken);
-      navigate('/home');
-    } catch (err) {
-      const message =
-        axios.isAxiosError(err) && err.response?.data?.message
-          ? err.response.data.message
-          : 'Something went wrong. Please try again.';
-
-      if (needUsername) setGoogleError(message);
-      else toastError(message);
     } finally {
       setLoading(false);
     }
@@ -159,31 +114,14 @@ export const Login = () => {
 
             <p className="text-center text-xs text-gray-400 my-1">or</p>
 
-            <div className="mt-3">
-              <GoogleLoginButton
-                onSuccess={(response) => {
-                  if (!response.credential) {
-                    toastError('Google login failed. Please try again.');
-                    return;
-                  }
-                  handleGoogleSubmit(response.credential);
-                }}
-              />
-            </div>
+            <GoogleAuth
+              loading={loading}
+              setLoading={setLoading}
+              text="signin_with"
+            />
           </div>
         </AuthContainer>
       </AuthLayout>
-      {needUsername && (
-        <UsernameModal
-          onClose={closeUsernameModal}
-          onSubmit={(username) =>
-            handleGoogleSubmit(googleCredential, username)
-          }
-          isLoading={loading}
-          onInputChange={() => setGoogleError('')}
-          error={googleError}
-        />
-      )}
     </>
   );
 };
