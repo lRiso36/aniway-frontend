@@ -24,7 +24,7 @@ export async function login(data: LoginData) {
 
 export async function googleLogin(credential: string, username?: string) {
   const response = await client.post('/auth/googleLogin', {
-    credential, 
+    credential,
     username,
   });
   const { accessToken, needsUsername } = response.data;
@@ -42,4 +42,11 @@ export async function resetPassword(token: string, newPassword: string) {
 export async function getMe() {
   const response = await client.get('users/me');
   return response.data;
+}
+
+export async function isUsernameAvailable(username: string) {
+  const response = await client.get('/auth/username-available', {
+    params: { username },
+  });
+  return response;
 }

@@ -8,6 +8,7 @@ import { toastError } from '../../../lib/toast';
 import axios from 'axios';
 import { GoogleAuth } from './GoogleAuth';
 import { AgreeToTerms } from './AgreeToTerms';
+import { SuggestUsernameButton } from './SuggestUsernameButton';
 
 type SignUpStepOneTypes = {
   formData: SignUpFormData;
@@ -84,6 +85,12 @@ export const SignUpForm = ({
         value={formData.username}
         onChange={(c: string) =>
           setFormData((prev) => ({ ...prev, username: c }))
+        }
+      />
+      <SuggestUsernameButton
+        disabled={loading}
+        onSuggest={(name) =>
+          setFormData((prev) => ({ ...prev, username: name }))
         }
       />
       <FormInput

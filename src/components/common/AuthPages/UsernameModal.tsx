@@ -3,6 +3,7 @@ import { FormInput } from '../../ui/FormInput';
 import { useUsernameValidation } from '../../../hooks/useUsernameValidation';
 import { AuthButtons } from '../../ui/AuthButtons';
 import { AgreeToTerms } from './AgreeToTerms';
+import { SuggestUsernameButton } from './SuggestUsernameButton';
 
 type UsernameModalProps = {
   onClose: () => void;
@@ -55,6 +56,14 @@ export const UsernameModal = ({
             value={username}
             onChange={(c: string) => {
               setUsername(c);
+              onInputChange?.();
+            }}
+          />
+
+          <SuggestUsernameButton
+            disabled={isLoading}
+            onSuggest={(name) => {
+              setUsername(name);
               onInputChange?.();
             }}
           />
