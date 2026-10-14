@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FormInput } from '../../ui/FormInput';
 import { useUsernameValidation } from '../../../hooks/useUsernameValidation';
 import { AuthButtons } from '../../ui/AuthButtons';
+import { AgreeToTerms } from './AgreeToTerms';
 
 type UsernameModalProps = {
   onClose: () => void;
@@ -20,6 +21,7 @@ export const UsernameModal = ({
 }: UsernameModalProps) => {
   const [username, setUsername] = useState('');
   const { usernameError, usernameValid } = useUsernameValidation(username);
+  const [agreed, setAgreed] = useState(false);
 
   const handleSubmit = () => {
     if (usernameValid && !isLoading) onSubmit(username);
@@ -56,9 +58,12 @@ export const UsernameModal = ({
               onInputChange?.();
             }}
           />
+
+          <AgreeToTerms agreed={agreed} setAgreed={setAgreed} />
+
           <AuthButtons
             onClick={handleSubmit}
-            clickEnabled={usernameValid && !isLoading}
+            clickEnabled={usernameValid && agreed && !isLoading}
             label={isLoading ? 'Creating...' : 'Create account'}
           />
         </div>
