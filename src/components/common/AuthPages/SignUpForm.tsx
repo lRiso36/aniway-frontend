@@ -6,8 +6,8 @@ import { AuthButtons } from '../../ui/AuthButtons';
 import { registerUser } from '../../../api/auth';
 import { toastError } from '../../../lib/toast';
 import axios from 'axios';
-import { PrivacyModal } from './PrivacyModal';
-import { TermsModal } from './TermsModal';
+import { GoogleAuth } from './GoogleAuth';
+import { AgreeToTerms } from './AgreeToTerms';
 
 type SignUpStepOneTypes = {
   formData: SignUpFormData;
@@ -25,8 +25,6 @@ export const SignUpForm = ({
   onSuccess,
 }: SignUpStepOneTypes) => {
   const [loading, setLoading] = useState(false);
-  const [privacyOpen, setPrivacyOpen] = useState(false);
-  const [tosOpen, setTosOpen] = useState(false);
 
   const {
     usernameError,
@@ -124,48 +122,20 @@ export const SignUpForm = ({
         }
       />
 
-      <div className="flex items-center gap-2 mt-4">
-        <input
-          type="checkbox"
-          id="agree"
-          checked={agreed}
-          className="accent-purple-500 shrink-0"
-          onChange={(e) => setAgreed(e.target.checked)}
-        />
-        <label
-          htmlFor="agree"
-          className="text-xs sm:text-sm text-zinc-500 leading-relaxed"
-        >
-          I agree to the
-          <span
-            className="text-purple-400 cursor-pointer hover:underline mx-1"
-            onClick={(e) => {
-              e.preventDefault();
-              setTosOpen(true);
-            }}
-          >
-            Terms of Service
-          </span>
-          and
-          <span
-            className="text-purple-400 cursor-pointer hover:underline ml-1"
-            onClick={(e) => {
-              e.preventDefault();
-              setPrivacyOpen(true);
-            }}
-          >
-            Privacy Policy
-          </span>
-        </label>
-      </div>
-
-      {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
-      {tosOpen && <TermsModal onClose={() => setTosOpen(false)} />}
+      <AgreeToTerms agreed={agreed} setAgreed={setAgreed} />
 
       <AuthButtons
         onClick={() => handleSubmit()}
         clickEnabled={approved && !loading}
         label={loading ? 'Signing Up...' : 'Sign Up'}
+      />
+
+      <p className="text-center text-xs text-gray-400 my-1">or</p>
+
+      <GoogleAuth
+        loading={loading}
+        setLoading={setLoading}
+        text="signup_with"
       />
     </div>
   );
