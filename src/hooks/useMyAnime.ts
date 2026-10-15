@@ -60,9 +60,9 @@ export const useMyAnime = () => {
         new Date(a.entry.updatedAt).getTime()
     )
     .map((item) => item.anime);
-  console.log(
-    animeEntryList.map((i) => [typeof i.entry.finishDate, i.entry.finishDate])
-  );
+  // console.log(
+  //   animeEntryList.map((i) => [typeof i.entry.finishDate, i.entry.finishDate])
+  // );
   const completed = animeEntryList
     .filter((item) => item.entry.status === 'completed')
     .sort((a, b) => toTime(b.entry.finishDate) - toTime(a.entry.finishDate))

@@ -8,6 +8,7 @@ import { AppLayout } from './components/common/AppLayout';
 import { Settings } from './pages/Settings';
 import { Landing } from './pages/Landing';
 import { MyAnime } from './pages/MyAnime';
+import { AnimeDetail } from './pages/AnimeDetail';
 export function AppRoutes() {
   return (
     <Routes>
@@ -22,6 +23,7 @@ export function AppRoutes() {
         <Route path="/browse" element={<Browse />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/my-anime" element={<MyAnime />} />
+         <Route path="/anime/:id" element={<AnimeDetail/>}></Route>
       </Route>
     </Routes>
   );

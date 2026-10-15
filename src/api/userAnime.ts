@@ -35,3 +35,8 @@ export async function getUserAnimeEntries(includeAnime = false) {
 export async function removeAnimeEntry(animeId: string) {
   await client.delete(`/user-anime/${animeId}`);
 }
+
+export async function getUserAnimeEntry(anilistId: number) {
+  const response = await client.get(`/user-anime/${anilistId}`);
+  return response.data.entry;
+}
