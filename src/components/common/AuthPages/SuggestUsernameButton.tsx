@@ -21,7 +21,7 @@ export const SuggestUsernameButton = ({ onSuggest, disabled }: Props) => {
       type="button"
       onClick={handleSuggest}
       disabled={suggesting || disabled}
-      className="w-full rounded-lg border border-purple-500 text-zinc-200 text-sm py-2 hover:bg-purple-500/20 transition-colors disabled:border-purple-500/40 disabled:text-purple-300/50 disabled:cursor-not-allowed"
+      className="w-full rounded-lg border border-purple-400/20 text-zinc-300 text-sm py-2 bg-zinc-900 hover:bg-purple-500/20 transition-colors disabled:border-purple-500/40 disabled:text-purple-300/50 disabled:cursor-not-allowed"
     >
       {suggesting ? 'Finding one...' : 'Suggest a username'}
     </button>
