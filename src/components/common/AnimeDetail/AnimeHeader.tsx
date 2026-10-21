@@ -60,7 +60,7 @@ export const AnimeHeader = ({
         />
       </div>
 
-      <div className="col-span-2 md:col-span-1 md:col-start-3 md:row-start-1 md:row-span-2 md:self-end">
+      <div className="col-span-2 md:col-span-1 md:col-start-3 md:row-start-1 md:row-span-2 md:self-end hidden md:block">
         <ProgressBox entry={entry} episodeCount={anime.episodeCount} />
       </div>
     </div>

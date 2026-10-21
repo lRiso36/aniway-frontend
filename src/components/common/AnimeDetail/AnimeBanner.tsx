@@ -14,7 +14,7 @@ export const AnimeBanner = ({ anime }: AnimeBannerProps) => {
         alt={anime.titleEnglish ?? anime.titleRomaji}
         className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/60 to-[#0a0a14]" />
+      <div className="absolute absolute inset-x-0 top-0 -bottom-px bg-gradient-to-b from-black/10 via-black/60 to-[#0a0a14]" />
     </div>
   );
 };
