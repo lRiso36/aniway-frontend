@@ -1,9 +1,10 @@
 // import { MyAnimeConatiner } from "../components/MyAnimeContainer"
 import { useSearchParams } from 'react-router-dom';
-import { MyAnimeNavBar } from '../components/common/MyAnime/MyAnimeNav';
 import { MyAnimeContainer } from '../components/common/MyAnime/MyAnimeContainer';
 // import { Loading } from "../components/Loading"
 import { useMyAnime } from '../hooks/useMyAnime';
+import { TabNav } from '../components/common/TabNav';
+import { MY_ANIME_NAV_ITEMS } from '../data/myAnimeNavItems';
 
 export const MyAnime = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,7 +42,11 @@ export const MyAnime = () => {
             "
       >
         <h2 className="ml-3 text-white text-2xl font-bold">My Anime</h2>
-        <MyAnimeNavBar />
+        <TabNav
+          items={MY_ANIME_NAV_ITEMS}
+          defaultTab="overview"
+          variant="pill"
+        />
 
         <div>
           {tab === 'overview' && (
