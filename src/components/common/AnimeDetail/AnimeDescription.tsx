@@ -11,7 +11,14 @@ export const AnimeDescription = ({ description }: AnimeDescriptionProps) => {
 
   useLayoutEffect(() => {
     const el = ref.current;
-    if (el && !showFull) setOverflows(el.scrollHeight > el.clientHeight);
+    if (!el || showFull) return;
+
+    const measure = () => setOverflows(el.scrollHeight > el.clientHeight);
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [description, showFull]);
 
   if (!description) return null;
