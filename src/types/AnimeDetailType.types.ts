@@ -40,6 +40,16 @@ export type ExternalLink = {
   color?: string;
 };
 
+export type EpisodeDataType = {
+  episodeNumber: number;
+  relativeNumber?: number;
+  title: string;
+  titleJapanese?: string;
+  airedAt?: Date;
+  filler?: boolean;
+  recap?: boolean;
+};
+
 export type AnimeDetailType = AnimeType & {
   characters: CharacterLink[];
   studios: StudioLink[];
