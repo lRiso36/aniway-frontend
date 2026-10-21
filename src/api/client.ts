@@ -19,7 +19,12 @@ client.interceptors.request.use((config) => {
 });
 
 let refreshPromise: Promise<string> | null = null;
-const excludedFromRefresh = ['/auth/login', '/auth/register', '/auth/refresh', '/auth/googleLogin'];
+const excludedFromRefresh = [
+  '/auth/login',
+  '/auth/register',
+  '/auth/refresh',
+  '/auth/googleLogin',
+];
 
 client.interceptors.response.use(
   (response) => response,

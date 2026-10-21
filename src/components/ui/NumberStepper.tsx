@@ -86,7 +86,9 @@ export const NumberStepper = ({
           type="button"
           aria-label="Increase"
           onClick={() =>
-            onChange(clamp(roundValue((value ?? MIN) + step, decimalPlaces ?? 2)))
+            onChange(
+              clamp(roundValue((value ?? MIN) + step, decimalPlaces ?? 2))
+            )
           }
           className="flex-1 flex items-center justify-center text-white/40 hover:text-white transition-colors"
         >
@@ -104,7 +106,9 @@ export const NumberStepper = ({
           type="button"
           aria-label="Decrease"
           onClick={() =>
-            onChange(clamp(roundValue((value ?? MIN) - step, decimalPlaces ?? 2)))
+            onChange(
+              clamp(roundValue((value ?? MIN) - step, decimalPlaces ?? 2))
+            )
           }
           className="flex-1 flex items-center justify-center text-white/40 hover:text-white transition-colors"
         >

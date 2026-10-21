@@ -23,7 +23,7 @@ export function AppRoutes() {
         <Route path="/browse" element={<Browse />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/my-anime" element={<MyAnime />} />
-         <Route path="/anime/:id" element={<AnimeDetail/>}></Route>
+        <Route path="/anime/:id" element={<AnimeDetail />}></Route>
       </Route>
     </Routes>
   );
