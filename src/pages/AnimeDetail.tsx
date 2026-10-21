@@ -18,6 +18,7 @@ import { toggleIsFavorite } from '../api/userAnime';
 import { BackButton } from '../components/common/AnimeDetail/BackButton';
 import { TabNav } from '../components/common/TabNav';
 import { ANIME_DETAIL_NAV_ITEMS } from '../data/animeDetialNavItems';
+import { AnimeInfo } from '../components/common/AnimeDetail/AnimeInfo';
 // import { useEpisodeData } from "../hooks/animeDetail/useEpisodeData";
 // import { ActionMenu } from "../components/ActionMenu";
 
@@ -138,59 +139,17 @@ export const AnimeDetail = () => {
                 onToggleFavorite={() => toggleIsFavorite(animeDetails._id)}
                 onMenuSelect={() => console.log('menu selected')}
             />
-            {/* desktop layout */}
-            {/* <div className="hidden md:flex gap-6 max-w-6xl mx-auto px-4 sm:px-8 -mt-16 relative z-10 items-start">
-                <img
-                    src={animeDetails.coverImage.large}
-                    alt={animeDetails.title.english ?? animeDetails.title.romaji}
-                    className="w-36 lg:w-44 aspect-[3/4] object-cover rounded-lg shrink-0 shadow-lg"
-                />
-                <div className="flex flex-col gap-1 flex-1 min-w-0 pb-2">
-                    <p className="text-white font-bold text-2xl sm:text-3xl line-clamp-1 pb-1">
-                        {animeDetails.title.english ?? animeDetails.title.romaji}
-                    </p>
-                    {animeDetails.title.romaji && /[\u3000-\u9fff]/.test(animeDetails.title.romaji) && (
-                        <p className="text-white/50 text-sm">{animeDetails.title.romaji}</p>
-                    )}
-                    {genreBadges}
-                    {scoreBadge}
-                    {descriptionBlock}
-                    {actionButtons(false)}
-                </div>
-                {progressBox}
-            </div> */}
-
-            {/* mobile layout */}
-            {/* <div className="md:hidden flex gap-3 max-w-6xl mx-auto px-4 -mt-16 relative z-10 items-start">
-                <img
-                    src={animeDetails.coverImage.large}
-                    alt={animeDetails.title.english ?? animeDetails.title.romaji}
-                    className="w-28 aspect-[3/4] object-cover rounded-lg shrink-0 shadow-lg"
-                />
-                <div className="flex flex-col gap-1 flex-1 min-w-0">
-                    <p className="text-white font-bold text-lg line-clamp-2">
-                        {animeDetails.title.english ?? animeDetails.title.romaji}
-                    </p>
-                    {animeDetails.title.romaji && /[\u3000-\u9fff]/.test(animeDetails.title.romaji) && (
-                        <p className="text-white/40 text-xs">{animeDetails.title.romaji}</p>
-                    )}
-                    {genreBadges}
-                    {scoreBadge}
-                </div>
-            </div> */}
-
-            {/* mobile description + buttons */}
-            {/* <div className="md:hidden max-w-6xl mx-auto px-4 mt-3">
-                <div className="mt-3 mb-6">{descriptionBlock}</div>
-                {actionButtons(true)}
-            </div> */}
 
             {/* navbar */}
             <div className='max-w-6xl mx-auto px-4 sm:px-8 mt-6'>
                 <TabNav items={ANIME_DETAIL_NAV_ITEMS} defaultTab='details' variant='underline' replace={true} />
+                <div className="max-w-6xl mx-auto px-4 sm:px-8 mt-6">
+                    {tab === 'details' && (
+                        <AnimeInfo animeDetails={animeDetails} />
+                    )}
+                </div>
             </div>
-            {/* <div className="max-w-6xl mx-auto px-4 sm:px-8 mt-6">
-                <AnimeDetailNavBar />
+            {/* 
             </div>
             <div className="max-w-6xl mx-auto px-4 sm:px-8 mt-6">
                 {tab === 'details' && (
