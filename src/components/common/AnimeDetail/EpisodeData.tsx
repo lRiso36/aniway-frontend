@@ -2,11 +2,12 @@ import type { EpisodeDataType } from '../../../types/AnimeDetailType.types';
 // import type Episode
 
 type EpisodeListType = {
-  episodes: EpisodeDataType[];
+  episodes: EpisodeDataType[] | null;
 };
 
 export const EpisodeData = ({ episodes }: EpisodeListType) => {
-  if (episodes.length === 0)
+    console.log(episodes)
+  if (!episodes || episodes.length === 0)
     return (
       <div className="flex flex-col items-center justify-center py-12 text-white/30">
         <p className="text-4xl mb-3">📺</p>
@@ -22,11 +23,11 @@ export const EpisodeData = ({ episodes }: EpisodeListType) => {
           className={`flex items-center gap-4 py-3 ${index < episodes.length - 1 ? 'border-b border-white/[0.06]' : ''}`}
         >
           <span className="text-purple-500/70 text-sm font-semibold min-w-[28px]">
-            {String(episode.episodeNumber).padStart(2, '0')}
+            {String(episode.relativeNumber ?? episode.episodeNumber).padStart(2, '0')}
           </span>
           <div className="flex-1 min-w-0">
             <p className="text-white/90 text-sm truncate">
-              {episode.title ?? `Episode ${episode.episodeNumber}`}
+              {episode.title ?? episode.titleJapanese ?? `Episode ${episode.episodeNumber}`}
             </p>
             {episode.airedAt && (
               <p className="text-white/30 text-xs mt-0.5">

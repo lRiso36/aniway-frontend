@@ -19,6 +19,9 @@ import { BackButton } from '../components/common/AnimeDetail/BackButton';
 import { TabNav } from '../components/common/TabNav';
 import { ANIME_DETAIL_NAV_ITEMS } from '../data/animeDetialNavItems';
 import { AnimeInfo } from '../components/common/AnimeDetail/AnimeInfo';
+import { useEpisodeData } from '../hooks/useEpisodeData';
+import { Loading } from '../components/ui/Loading';
+import { EpisodeData } from '../components/common/AnimeDetail/EpisodeData';
 // import { useEpisodeData } from "../hooks/animeDetail/useEpisodeData";
 // import { ActionMenu } from "../components/ActionMenu";
 
@@ -38,10 +41,7 @@ export const AnimeDetail = () => {
     const [showToast, setShowToast] = useState(false);
     // const canRemove = !!entry;
 
-    // const cleanDescription = animeDetails?.description
-    //     ?.replace(/<br\s*\/?>/gi, '\n')
-    //     .replace(/<[^>]*>/g, '')
-    //     .trim();
+    const { episodeData, episodeLoading } = useEpisodeData(animeDetails?.anilistId, tab);
 
     // if (loading) return (
     //     <Loading loading={loading} />
@@ -146,6 +146,13 @@ export const AnimeDetail = () => {
                 <div className="max-w-6xl mx-auto px-4 sm:px-8 mt-6">
                     {tab === 'details' && (
                         <AnimeInfo animeDetails={animeDetails} />
+                    )}
+                    {tab === 'episodes' && (
+                        episodeLoading ? (
+                            <Loading loading={loading} />
+                        ) : (
+                            <EpisodeData episodes={episodeData} />
+                        )
                     )}
                 </div>
             </div>

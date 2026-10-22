@@ -4,6 +4,7 @@ import type {
   AnimeFilterResponse,
   AnimeFilterParams,
 } from '../types/AnimeSearch.types';
+import type { EpisodeDataType } from '../types/AnimeDetailType.types';
 
 export async function getAnimeBySearch(query: string) {
   const response = await client.get<AnimeType[]>(`/anime/search`, {
@@ -19,5 +20,10 @@ export async function getAnimeByFilters(params: AnimeFilterParams) {
 
 export async function getAnimeDetails(anilistId: number) {
   const response = await client.get<AnimeDetailType>(`/anime/${anilistId}`);
+  return response.data;
+}
+
+export async function getAnimeEpisodes(anilistId: number) {
+  const response = await client.get<EpisodeDataType[]>(`/anime/${anilistId}/episodes`);
   return response.data;
 }
